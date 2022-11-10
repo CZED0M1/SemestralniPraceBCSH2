@@ -7,28 +7,23 @@
    mc:Ignorable = "d" 
    d:DesignHeight = "300" d:DesignWidth = "300">
 
+
     <Grid>
-        <StackPanel HorizontalAlignment = "Left">
-            <StackPanel Orientation = "Horizontal">
-                <Label Content = "Název" 
-                        Width = "100" Margin = "3 5 3 5"/>
+        <StackPanel Orientation="Horizontal">
+            
+                <ListView Margin="10" ItemsSource="{Binding Path=Knihovny}" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Oddělení" Width="320" DisplayMemberBinding="{Binding Path= Nazev}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            <StackPanel Orientation="Vertical">
+                <Button Content="Přidat" Height="30" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Width="100"/>
+                <Button Content="Změnit" Height="30" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Width="100"/>
+                <Button Content="Odebrat" Height="30" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Width="100"/>
             </StackPanel>
-            <ItemsControl ItemsSource = "{Binding Path = Knihovny}">
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation = "Horizontal">
-                            <TextBox Text = "{Binding Path = Nazev, Mode = TwoWay}" 
-                        Width = "100" Margin = "3 5 3 5"/>
-
-
-
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-
-            </ItemsControl>
-
         </StackPanel>
     </Grid>
 
