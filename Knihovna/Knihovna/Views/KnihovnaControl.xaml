@@ -4,14 +4,13 @@
    xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006" 
    xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" 
    xmlns:local = "clr-namespace:Knihovna.Views" 
-   mc:Ignorable = "d" 
-   d:DesignHeight = "300" d:DesignWidth = "300">
+   mc:Ignorable = "d" Height="344" Width="605">
 
 
     <Grid>
         <StackPanel Orientation="Horizontal">
             
-                <ListView Margin="10" ItemsSource="{Binding Path=Knihovny}" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
+                <ListView Name="lv1" Margin="10" ItemsSource="{Binding Path=Knihovny}" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Oddělení" Width="320" DisplayMemberBinding="{Binding Path= Nazev}" />
@@ -20,9 +19,9 @@
                 </ListView>
 
             <StackPanel Orientation="Vertical">
-                <Button Content="Přidat" Height="30" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Width="100"/>
-                <Button Content="Změnit" Height="30" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Width="100"/>
-                <Button Content="Odebrat" Height="30" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Width="100"/>
+                <Button Content="Přidat" Height="30" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
+                <Button Content="Změnit" Height="30" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_2"/>
+                <Button Content="Odebrat" Height="30" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
             </StackPanel>
         </StackPanel>
     </Grid>
