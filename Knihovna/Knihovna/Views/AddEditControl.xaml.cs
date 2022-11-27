@@ -25,13 +25,22 @@ namespace Knihovna.Views
         public AddEditControl()
         {
             InitializeComponent();
+            if (Add.knihovna!=null)OddName.Text = Add.knihovna.Nazev;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Knihovny a = new Knihovny { Nazev = OddName.Text };
-            KnihovnaViewModel.addKnihovny(a);
-            Add.GetWindow(this).Close();
+            if (Add.knihovna == null)
+            {
+                Knihovny a = new Knihovny { Nazev = OddName.Text };
+                KnihovnaViewModel.addKnihovny(a);
+                Add.GetWindow(this).Close();
+                Add.knihovna = null;
+            } else
+            {
+                Add.knihovna.Nazev = OddName.Text;
+                Add.GetWindow(this).Close();
+            }
         }
     }
 }

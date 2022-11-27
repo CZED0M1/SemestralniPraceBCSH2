@@ -32,6 +32,7 @@ namespace Knihovna.Views
         //ADD
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Add.knihovna = null;
             Add page = new Add();
             page.Show();
         }
@@ -39,15 +40,31 @@ namespace Knihovna.Views
         //DELETE
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            KnihovnaViewModel.removeKnihovny((Knihovny)lv1.SelectedItem);
+            if (lv1.SelectedItems.Count > 0)
+            {
+                KnihovnaViewModel.removeKnihovny((Knihovny)lv1.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Není vybráno oddělení", "Chyba");
+            }
         }
 
         //EDIT
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Knihovny knihovna = (Knihovny)lv1.SelectedItem;
-            Add page = new Add(knihovna);
-            page.Show();
+            if (lv1.SelectedItems.Count > 0)
+            {
+                Knihovny knihovna = (Knihovny)lv1.SelectedItem;
+                Add.knihovna = knihovna;
+                Add page = new Add();
+                page.Show();
+               
+            }
+            else
+            {
+                MessageBox.Show("Není vybráno oddělení", "Chyba");
+            }
         }
     }
 }

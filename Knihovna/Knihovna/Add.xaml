@@ -6,7 +6,7 @@
    xmlns:local = "clr-namespace:Knihovna"
    xmlns:views = "clr-namespace:Knihovna.Views"
    mc:Ignorable = "d"
-   Title = "Add" Height = "350" Width = "525">
+   Title = "Add" Height = "150" Width = "250">
 
     <Grid>
         <views:AddEditControl x:Name = "KnihovnaViewModel"/>
