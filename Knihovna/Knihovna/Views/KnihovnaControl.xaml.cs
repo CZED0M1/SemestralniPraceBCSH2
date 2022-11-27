@@ -66,5 +66,10 @@ namespace Knihovna.Views
                 MessageBox.Show("Není vybráno oddělení", "Chyba");
             }
         }
+
+        private void detailOpen(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("doubleClick", "test");
+        }
     }
 }
