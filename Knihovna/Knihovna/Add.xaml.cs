@@ -20,6 +20,7 @@ namespace Knihovna
     /// </summary>
     public partial class Add : Window
     {
+        //remove knihovna, řešit přes hledání v array
        public static Knihovny knihovna;
         public Add()
         {

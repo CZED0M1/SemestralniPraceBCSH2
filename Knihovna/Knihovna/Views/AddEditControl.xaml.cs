@@ -30,6 +30,7 @@ namespace Knihovna.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //thread a dispatcher + bool open
             if (Add.knihovna == null)
             {
                 Knihovny a = new Knihovny { Nazev = OddName.Text };
