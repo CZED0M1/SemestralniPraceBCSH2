@@ -32,7 +32,6 @@ namespace Knihovna.Views
         //ADD
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Add.knihovna = null;
             Add page = new Add();
             page.Show();
         }
@@ -56,7 +55,7 @@ namespace Knihovna.Views
             if (lv1.SelectedItems.Count > 0)
             {
                 Knihovny knihovna = (Knihovny)lv1.SelectedItem;
-                Add.knihovna = knihovna;
+                AddEditControl.nazev = knihovna.Nazev;
                 Add page = new Add();
                 page.Show();
                

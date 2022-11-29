@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,25 +23,46 @@ namespace Knihovna.Views
     /// </summary>
     public partial class AddEditControl : UserControl
     {
+        public static string nazev="";
         public AddEditControl()
         {
+            
             InitializeComponent();
-            if (Add.knihovna!=null)OddName.Text = Add.knihovna.Nazev;
+
+                OddName.Text = nazev;
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //thread a dispatcher + bool open
-            if (Add.knihovna == null)
+            try
             {
-                Knihovny a = new Knihovny { Nazev = OddName.Text };
-                KnihovnaViewModel.addKnihovny(a);
-                Add.GetWindow(this).Close();
-                Add.knihovna = null;
-            } else
+                Thread uselessThreadExample = new Thread(() =>
+                {
+                    Knihovny? a = null;
+                    //thread a dispatcher + bool open
+                    if (KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).Any())
+                        a = KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).First();
+
+                    if (a == null)
+                    {
+                        a =  new Knihovny { Nazev = OddName.Text };
+                        KnihovnaViewModel.addKnihovny(a);
+                        //Add.GetWindow(this).Close();
+
+                    }
+                    else
+                    {
+                        a.Nazev = OddName.Text;
+                        //Add.GetWindow(this).Close();
+                        nazev = "";
+                    }
+                    Dispatcher.Invoke(() => Add.GetWindow(this).Close());
+                });
+                uselessThreadExample.Start();
+            }catch(Exception)
             {
-                Add.knihovna.Nazev = OddName.Text;
-                Add.GetWindow(this).Close();
+
             }
         }
     }
