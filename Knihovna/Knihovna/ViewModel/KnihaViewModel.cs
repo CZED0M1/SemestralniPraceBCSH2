@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Knihovna.ViewModel
 {
@@ -22,7 +23,6 @@ namespace Knihovna.ViewModel
             knihy.Add(new Kniha {Nazev= "RUR", ISBN = "AB", Autor = "KA" });
             knihy.Add(new Kniha { Nazev = "RUdag", ISBN = "CD", Autor = "Ks" });
             knihy.Add(new Kniha { Nazev = "RUadgs", ISBN = "EF", Autor = "asgd" });
-
             KnihovnaViewModel.Knihovny[0].Knihy = knihy;
         }
     }

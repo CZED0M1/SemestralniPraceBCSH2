@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Knihovna.Model
 {
-    public class KnihaModel {}
+    internal class KnihaModel {}
     public class Kniha : INotifyPropertyChanged
     {
         private string nazev;

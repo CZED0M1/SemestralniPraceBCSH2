@@ -53,7 +53,7 @@ namespace Knihovna.Model
             set
             {
                 knihy = value;
-                RaisePropertyChanged("isbn");
+                RaisePropertyChanged("Knihy");
             }
         }
         public ObservableCollection<Vypujcka> VypujceneKnihy
@@ -63,7 +63,7 @@ namespace Knihovna.Model
             set
             {
                 vypujceneKnihy = value;
-                RaisePropertyChanged("autor");
+                RaisePropertyChanged("Vypujcene");
             }
         }
 

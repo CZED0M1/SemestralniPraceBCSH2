@@ -68,7 +68,10 @@ namespace Knihovna.Views
 
         private void detailOpen(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("doubleClick", "test");
+            Knihovny knihovna = (Knihovny)lv1.SelectedItem;
+            //DetailOddeleni.nazev = knihovna.Nazev;
+            detailOdd page = new detailOdd();
+            page.Show();
         }
     }
 }
