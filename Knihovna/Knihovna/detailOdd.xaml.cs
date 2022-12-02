@@ -1,5 +1,6 @@
 ﻿using Knihovna.Model;
 using Knihovna.ViewModel;
+using Knihovna.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +26,7 @@ namespace Knihovna
         public detailOdd()
         {
             InitializeComponent();
+
         }
         private void Knihy_Loaded(object sender, RoutedEventArgs e)
         {
@@ -32,8 +34,10 @@ namespace Knihovna
                new Knihovna.ViewModel.KnihaViewModel();
             studentViewModelObject.LoadKnihy();
 
-            DetailOdd.DataContext = KnihovnaViewModel.Knihovny[0].Knihy;
 
+            
+
+            DetailOdd.DataContext = studentViewModelObject;
         }
     }
 }

@@ -24,21 +24,23 @@ namespace Knihovna.Views
     public partial class DetailOddeleni : UserControl
     {
         public static string nazev;
-        public ObservableCollection<Knihovny> odd;
         public DetailOddeleni()
         {
             InitializeComponent();
+            Knihovna.ViewModel.ZakazniciViewModel studentViewModelObject2 =
+               new Knihovna.ViewModel.ZakazniciViewModel();
+            studentViewModelObject2.LoadZakaznici();
+            lv1.DataContext = studentViewModelObject2;
+            jmenoOd.Content = "Oddělení " + nazev;
 
-            odd = KnihovnaViewModel.Knihovny;
-            lv1.ItemsSource= odd[0].Knihy;
         }
 
         private void addKniha(object sender, RoutedEventArgs e)
         {
+            Zakaznik z = new Zakaznik { Jmeno="A", Prijmeni="A" };
             Kniha k = new Kniha { Nazev = "A", Autor = "B", ISBN = "C", Vypujcena = false };
-            odd[0].Knihy.Add(k);
-            MessageBox.Show(odd[0].Knihy[0].Nazev);
-            lv1.Items.Refresh();
+            KnihaViewModel.Knihy.Add(k);
+            ZakazniciViewModel.Zakaznici.Add(z);
         }
     }
 }

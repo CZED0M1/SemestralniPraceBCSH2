@@ -14,8 +14,29 @@ namespace Knihovna.Model
     {
         private string jmeno;
         private string prijmeni;
+        private int vypujceno;
 
 
+        public int Vypujceno
+        {
+            get
+            {
+                return vypujceno;
+            }
+            set
+            {
+                    vypujceno = value;
+                    RaisePropertyChanged("vypujceno");
+                
+            }
+        }
+        public string JmenoPr
+        {
+            get
+            {
+                return jmeno + " " + prijmeni;
+            }
+        }
         public string Jmeno
         {
             get

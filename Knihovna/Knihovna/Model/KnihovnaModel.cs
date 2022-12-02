@@ -16,21 +16,8 @@ namespace Knihovna.Model
     public class Knihovny : INotifyPropertyChanged
     {
         private string nazev;
-        private ObservableCollection<Kniha>? knihy;
-        private ObservableCollection<Vypujcka>? vypujceneKnihy;
-        private ObservableCollection<Zakaznik>? zakaznici;
 
 
-        public ObservableCollection<Zakaznik> Zakaznici
-        {
-            get { return zakaznici; }
-
-            set
-            {
-                zakaznici = value;
-                RaisePropertyChanged("zakaznici");
-            }
-        }
         public string Nazev
         {
             get
@@ -44,26 +31,6 @@ namespace Knihovna.Model
                     nazev = value;
                     RaisePropertyChanged("nazev");
                 }
-            }
-        }
-        public ObservableCollection<Kniha> Knihy
-        {
-            get { return knihy; }
-
-            set
-            {
-                knihy = value;
-                RaisePropertyChanged("Knihy");
-            }
-        }
-        public ObservableCollection<Vypujcka> VypujceneKnihy
-        {
-            get { return vypujceneKnihy; }
-
-            set
-            {
-                vypujceneKnihy = value;
-                RaisePropertyChanged("Vypujcene");
             }
         }
 

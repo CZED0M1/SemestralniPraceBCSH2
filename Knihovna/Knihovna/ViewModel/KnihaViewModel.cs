@@ -11,7 +11,7 @@ namespace Knihovna.ViewModel
 {
     public class KnihaViewModel
     {
-        public ObservableCollection<Kniha> Knihy
+        public static ObservableCollection<Kniha> Knihy
         {
             get;
             set;
@@ -20,10 +20,10 @@ namespace Knihovna.ViewModel
         {
             ObservableCollection<Kniha> knihy = new ObservableCollection<Kniha>();
 
-            knihy.Add(new Kniha {Nazev= "RUR", ISBN = "AB", Autor = "KA" });
-            knihy.Add(new Kniha { Nazev = "RUdag", ISBN = "CD", Autor = "Ks" });
-            knihy.Add(new Kniha { Nazev = "RUadgs", ISBN = "EF", Autor = "asgd" });
-            KnihovnaViewModel.Knihovny[0].Knihy = knihy;
+            knihy.Add(new Kniha {Nazev= "RUR", ISBN = "AB", Autor = "KA",Vypujcena=false, knId = 1 });
+            knihy.Add(new Kniha { Nazev = "RUdag", ISBN = "CD", Autor = "Ks",Vypujcena=false,knId=1 });
+            knihy.Add(new Kniha { Nazev = "RUadgs", ISBN = "EF", Autor = "asgd", Vypujcena = false, knId = 2 });
+            Knihy = knihy;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Knihovna.ViewModel
         }
         public static void addKnihovny(Knihovny knihovna)
         {
+            
             Knihovny.Add(knihovna);
         }
         public static void removeKnihovny(Knihovny knihovna)

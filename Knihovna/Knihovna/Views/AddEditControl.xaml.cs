@@ -35,6 +35,7 @@ namespace Knihovna.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
                 Thread uselessThreadExample = new Thread(() =>
