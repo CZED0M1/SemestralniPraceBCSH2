@@ -9,7 +9,7 @@
    Title = "MainWindow" Height = "350" Width = "525">
 
     <Grid>
-        <views:KnihovnaControl x:Name = "KnihovnaViewModel" Loaded = "Knihovny_Loaded"/>
+        <views:KnihovnaControl x:Name = "KnihovnaViewModel" />
     </Grid>
 
 </Window>

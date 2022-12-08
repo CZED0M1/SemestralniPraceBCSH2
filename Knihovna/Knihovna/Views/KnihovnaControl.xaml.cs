@@ -27,13 +27,24 @@ namespace Knihovna.Views
         public KnihovnaControl()
         {
             InitializeComponent();
+            ViewModel.KnihovnaViewModel.Knihovny = new();
+            ViewModel.KnihaViewModel.Knihy = new();
+            ViewModel.ZakazniciViewModel.Zakaznici = new();
+            ViewModel.VypujckyViewModel.Vypujcky = new();
+            ViewModel.KnihaViewModel.LoadKnihy();
+            ViewModel.ZakazniciViewModel.LoadZakaznici();
+            ViewModel.VypujckyViewModel.LoadVypujcky();
+            ViewModel.KnihovnaViewModel.LoadKnihovny();
+            lv1.ItemsSource = KnihovnaViewModel.Knihovny;
+           
         }
 
         //ADD
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Add page = new Add();
-            page.Show();
+            page.Show(); 
+            lv1.Items.Refresh();
         }
 
         //DELETE
@@ -69,10 +80,46 @@ namespace Knihovna.Views
         //doubleClick
         private void detailOpen(object sender, MouseButtonEventArgs e)
         {
-            Knihovny knihovna = (Knihovny)lv1.SelectedItem;
+            if (lv1.SelectedItems.Count > 0)
+            {
+                Knihovny knihovna = (Knihovny)lv1.SelectedItem;
             DetailOddeleni.nazev = knihovna.Nazev;
+            DetailOddeleni.odd = knihovna;
             detailOdd page = new detailOdd();
             page.Show();
+            }
+            else
+            {
+                MessageBox.Show("Není vybráno Oddělení", "Chyba");
+            }
+        }
+
+        private void KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete) {
+                if (lv1.SelectedItems.Count > 0)
+                {
+                    KnihovnaViewModel.Knihovny.Remove((Knihovny)lv1.SelectedItem);
+                }
+                else
+                {
+                    MessageBox.Show("Není vybráno Oddělení", "Chyba");
+                }
+            }else if(e.Key == Key.Enter) {
+                if (lv1.SelectedItems.Count > 0)
+                {
+                    Knihovny knihovna = (Knihovny)lv1.SelectedItem;
+                    DetailOddeleni.nazev = knihovna.Nazev;
+                    DetailOddeleni.odd = knihovna;
+                    detailOdd page = new detailOdd();
+                    page.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Není vybráno Oddělení", "Chyba");
+                }
+
+            }
         }
     }
 }

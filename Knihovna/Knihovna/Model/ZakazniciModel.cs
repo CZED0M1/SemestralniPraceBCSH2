@@ -15,7 +15,21 @@ namespace Knihovna.Model
         private string jmeno;
         private string prijmeni;
         private int vypujceno;
+        private int knihovnaId;
 
+        public int KnihovnaId
+        {
+            get
+            {
+                return knihovnaId;
+            }
+            set
+            {
+                knihovnaId = value;
+                RaisePropertyChanged("knihovna");
+
+            }
+        }
 
         public int Vypujceno
         {
@@ -35,6 +49,14 @@ namespace Knihovna.Model
             get
             {
                 return jmeno + " " + prijmeni;
+            }
+            set
+            {
+                if (JmenoPr != value)
+                {
+                    JmenoPr = value;
+                    RaisePropertyChanged("jmenoPr");
+                }
             }
         }
         public string Jmeno

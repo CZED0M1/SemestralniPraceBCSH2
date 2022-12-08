@@ -30,6 +30,10 @@ namespace Knihovna.Views
             InitializeComponent();
 
                 OddName.Text = nazev;
+            if(nazev!="")
+            {
+                Pridat.Content = "Editovat";
+            }
 
         }
 
@@ -38,7 +42,7 @@ namespace Knihovna.Views
 
             try
             {
-                Thread uselessThreadExample = new Thread(() =>
+                Thread threadAdd = new Thread(() =>
                 {
                     Knihovny? a = null;
                     //thread a dispatcher + bool open
@@ -47,20 +51,19 @@ namespace Knihovna.Views
 
                     if (a == null)
                     {
-                        a =  new Knihovny { Nazev = OddName.Text };
-                        KnihovnaViewModel.addKnihovny(a);
-                        //Add.GetWindow(this).Close();
+
+                        
+                        Dispatcher.Invoke(() => KnihovnaViewModel.addKnihovny(new Knihovny { Nazev = OddName.Text }));
 
                     }
                     else
                     {
-                        a.Nazev = OddName.Text;
-                        //Add.GetWindow(this).Close();
+                        Dispatcher.Invoke(() => a.Nazev = OddName.Text);
                         nazev = "";
                     }
                     Dispatcher.Invoke(() => Add.GetWindow(this).Close());
                 });
-                uselessThreadExample.Start();
+                threadAdd.Start();
             }catch(Exception)
             {
 

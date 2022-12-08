@@ -1,9 +1,5 @@
-﻿using Knihovna.Model;
-using Knihovna.ViewModel;
-using Knihovna.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +15,13 @@ using System.Windows.Shapes;
 namespace Knihovna
 {
     /// <summary>
-    /// Interaction logic for detailOdd.xaml
+    /// Interaction logic for VypujckyW.xaml
     /// </summary>
-    public partial class detailOdd : Window
+    public partial class VypujckyW : Window
     {
-        public detailOdd()
+        public VypujckyW()
         {
             InitializeComponent();
-            
-
         }
     }
 }

@@ -16,14 +16,12 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
-        public void LoadKnihy()
+        public static void LoadKnihy()
         {
-            ObservableCollection<Kniha> knihy = new ObservableCollection<Kniha>();
 
-            knihy.Add(new Kniha {Nazev= "RUR", ISBN = "AB", Autor = "KA",Vypujcena=false, knId = 1 });
-            knihy.Add(new Kniha { Nazev = "RUdag", ISBN = "CD", Autor = "Ks",Vypujcena=false,knId=1 });
-            knihy.Add(new Kniha { Nazev = "RUadgs", ISBN = "EF", Autor = "asgd", Vypujcena = false, knId = 2 });
-            Knihy = knihy;
+            Knihy.Add(new Kniha {Nazev= "RUR", ISBN = "AB", Autor = "KA",knId = 0 });
+            Knihy.Add(new Kniha { Nazev = "RUdag", ISBN = "CD", Autor = "Ks",knId=1 });
+            Knihy.Add(new Kniha { Nazev = "RUadgs", ISBN = "EF", Autor = "asgd", knId = 0 });
         }
     }
 }

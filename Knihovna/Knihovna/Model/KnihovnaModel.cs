@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Knihovna.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,7 +17,39 @@ namespace Knihovna.Model
     public class Knihovny : INotifyPropertyChanged
     {
         private string nazev;
+        private int id;
 
+        public Knihovny()
+        {
+        }
+
+        public Knihovny(string nazev, int id)
+        {
+            Nazev = nazev;
+            this.id = id;
+        }
+
+        public Knihovny(string nazev)
+        {
+            id = KnihovnaViewModel.Knihovny.Count();
+            Nazev = nazev;
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                if (id != value)
+                {
+                    id = value;
+                    RaisePropertyChanged("id");
+                }
+            }
+        }
 
         public string Nazev
         {

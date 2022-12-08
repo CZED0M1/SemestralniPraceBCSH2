@@ -10,7 +10,7 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
             
-                <ListView Name="lv1" Margin="10" ItemsSource="{Binding Path=Knihovny}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" MouseDoubleClick="detailOpen">
+                <ListView Name="lv1" Margin="10" HorizontalAlignment="Left" HorizontalContentAlignment="Left" MouseDoubleClick="detailOpen" KeyDown="KeyDown">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Oddělení" Width="320" DisplayMemberBinding="{Binding Path= Nazev}" />

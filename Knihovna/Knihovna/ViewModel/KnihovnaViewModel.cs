@@ -5,25 +5,23 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Knihovna.ViewModel
 {
     public class KnihovnaViewModel
     {
-        public static ObservableCollection<Knihovny>? Knihovny
+        public static ObservableCollection<Knihovny> Knihovny
         {
             get;
             set;
         }
-        public void LoadKnihovny()
+        public static void LoadKnihovny()
         {
-            ObservableCollection<Knihovny> knihovny = new ObservableCollection<Knihovny>();
-
-            knihovny.Add(new Knihovny { Nazev = "A"});
-            knihovny.Add(new Knihovny { Nazev = "B" });
-            knihovny.Add(new Knihovny { Nazev = "C" });
-
-            Knihovny = knihovny;
+            Knihovny = new ObservableCollection<Knihovny>();
+            Knihovny.Add(new Knihovny { Nazev = "A", Id=0});
+            Knihovny.Add(new Knihovny { Nazev = "B", Id = 1 });
+            Knihovny.Add(new Knihovny { Nazev = "C",Id = 2 });
         }
         public static void addKnihovny(Knihovny knihovna)
         {
@@ -32,6 +30,19 @@ namespace Knihovna.ViewModel
         }
         public static void removeKnihovny(Knihovny knihovna)
         {
+            var bookToDelete = KnihaViewModel.Knihy.Where(k => k.knId == knihovna.Id).ToList();
+            var CustToDelete = ZakazniciViewModel.Zakaznici.Where(z => z.KnihovnaId == knihovna.Id).ToList();
+            foreach (var book in bookToDelete)
+            {
+                MessageBox.Show(book.Nazev);
+                KnihaViewModel.Knihy.Remove(book);
+            }
+            foreach (var zak in CustToDelete)
+            {
+                MessageBox.Show(zak.JmenoPr);
+                ZakazniciViewModel.Zakaznici.Remove(zak);
+            }
+            
             Knihovny.Remove(knihovna);
         }
     }

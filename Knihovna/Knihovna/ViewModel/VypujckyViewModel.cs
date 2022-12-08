@@ -15,17 +15,17 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
-        public void LoadVypujcky()
+        public static void LoadVypujcky()
         {
-            ObservableCollection<Vypujcka> vypujcky = new ObservableCollection<Vypujcka>();
-            Kniha kn = new Kniha { Nazev = "Tricky", Autor = " DL", ISBN = "AGAFDG" };
-            Kniha kn2 = new Kniha { Nazev = "IdontKnow", Autor = " asdg", ISBN = "Aadg" };
-            Kniha kn3 = new Kniha { Nazev = "Trickyadsg", Autor = " DagdsL", ISBN = "AGAagdsFDG" };
-            vypujcky.Add(new Vypujcka {Kniha=kn,Zakaznik= ZakazniciViewModel.Zakaznici[0] });
-            vypujcky.Add(new Vypujcka { Kniha = kn2, Zakaznik = ZakazniciViewModel.Zakaznici[1] });
-            vypujcky.Add(new Vypujcka { Kniha = kn3, Zakaznik = ZakazniciViewModel.Zakaznici[0] });
+            Kniha kn = new Kniha { Nazev = "Tricky", Autor = " DL", ISBN = "AGAFDG",knId=0 };
+            Kniha kn2 = new Kniha { Nazev = "IdontKnow", Autor = " asdg", ISBN = "Aadg", knId = 1 };
+            Kniha kn3 = new Kniha { Nazev = "Trickyadsg", Autor = " DagdsL", ISBN = "AGAagdsFDG", knId = 0 };
+            Vypujcky.Add(new Vypujcka {Kniha=kn,Zakaznik= ZakazniciViewModel.Zakaznici[0] });
+            Vypujcky.Add(new Vypujcka { Kniha = kn2, Zakaznik = ZakazniciViewModel.Zakaznici[1] });
+            Vypujcky.Add(new Vypujcka { Kniha = kn3, Zakaznik = ZakazniciViewModel.Zakaznici[0] });
+            ZakazniciViewModel.Zakaznici[0].Vypujceno = 2;
+            ZakazniciViewModel.Zakaznici[1].Vypujceno = 1;
 
-            VypujckyViewModel.Vypujcky = vypujcky;
         }
     }
 }

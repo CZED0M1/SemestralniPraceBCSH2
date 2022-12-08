@@ -1,6 +1,9 @@
-﻿using Knihovna.Views;
+﻿using Knihovna.Model;
+using Knihovna.ViewModel;
+using Knihovna.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,15 +27,18 @@ namespace Knihovna
         public MainWindow()
         {
             InitializeComponent();
+           
         }
-            private void Knihovny_Loaded(object sender, RoutedEventArgs e)
-            {
-                Knihovna.ViewModel.KnihovnaViewModel studentViewModelObject =
+
+        private void KnihovnaViewModel_Loaded(object sender, RoutedEventArgs e)
+        {
+            Knihovna.ViewModel.KnihovnaViewModel studentViewModelObject =
                    new Knihovna.ViewModel.KnihovnaViewModel();
-                studentViewModelObject.LoadKnihovny();
+            Knihovna.ViewModel.KnihovnaViewModel.LoadKnihovny();
 
             KnihovnaViewModel.DataContext = studentViewModelObject;
 
+            
         }
     }
 }

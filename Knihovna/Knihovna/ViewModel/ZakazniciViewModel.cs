@@ -16,15 +16,12 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
-        public void LoadZakaznici()
+        public static void LoadZakaznici()
         {
-            ObservableCollection<Zakaznik> zakaznici = new ObservableCollection<Zakaznik>();
 
-            zakaznici.Add(new Zakaznik { Jmeno="Dominik", Prijmeni="Lopauer"});
-            zakaznici.Add(new Zakaznik { Jmeno = "Pavel", Prijmeni = "Horňak" });
-            zakaznici.Add(new Zakaznik { Jmeno = "Petr", Prijmeni = "Dolňak" });
-
-            Zakaznici = zakaznici;
+            Zakaznici.Add(new Zakaznik { Jmeno="Dominik", Prijmeni="Lopauer", KnihovnaId=0});
+            Zakaznici.Add(new Zakaznik { Jmeno = "Pavel", Prijmeni = "Horňak", KnihovnaId = 1 });
+            Zakaznici.Add(new Zakaznik { Jmeno = "Petr", Prijmeni = "Dolňak", KnihovnaId = 1 });
         }
     }
 }

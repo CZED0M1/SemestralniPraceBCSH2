@@ -11,7 +11,6 @@ namespace Knihovna.Model
     public class Kniha : INotifyPropertyChanged
     {
         private string nazev;
-        private bool vypujcena;
         private string isbn;
         private string autor;
         private int knihovnaId;
@@ -63,16 +62,6 @@ namespace Knihovna.Model
             {
                 autor = value;
                 RaisePropertyChanged("autor");
-            }
-        }
-        public bool Vypujcena
-        {
-            get { return vypujcena; }
-
-            set
-            {
-                vypujcena = value;
-                RaisePropertyChanged("vypujcena");
             }
         }
 
