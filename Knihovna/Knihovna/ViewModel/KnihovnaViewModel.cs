@@ -1,4 +1,5 @@
 ﻿using Knihovna.Model;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,10 +19,34 @@ namespace Knihovna.ViewModel
         }
         public static void LoadKnihovny()
         {
-            Knihovny = new ObservableCollection<Knihovny>();
-            Knihovny.Add(new Knihovny { Nazev = "A", Id=0});
-            Knihovny.Add(new Knihovny { Nazev = "B", Id = 1 });
-            Knihovny.Add(new Knihovny { Nazev = "C",Id = 2 });
+            //    Knihovny = new ObservableCollection<Knihovny>();
+            //    Knihovny.Add(new Knihovny { Nazev = "A", Id = 1 });
+            //    Knihovny.Add(new Knihovny { Nazev = "B", Id = 2 });
+            //    Knihovny.Add(new Knihovny { Nazev = "C", Id = 3 });
+            //    Knihovny.Add(new Knihovny { Nazev = "D", Id = 4 });
+            //    Knihovny.Add(new Knihovny { Nazev = "E", Id = 5 });
+            //    Knihovny.Add(new Knihovny { Nazev = "F", Id = 6 });
+            //    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Oddeleni.db"))
+            //    {
+            //        var col = db.GetCollection<Knihovny>("knihovny");
+            //        foreach (var item in Knihovny)
+            //        {
+            //            col.Insert(item);
+            //        }
+            //    }
+            //}
+
+            using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Oddeleni.db"))
+            {
+                var col = db.GetCollection<Knihovny>("knihovny");
+                {
+                    IEnumerable<Knihovny> Kn = col.FindAll();
+                    foreach (var item in Kn)
+                    {
+                        Knihovny.Add(item);
+                    }
+                }
+            }
         }
         public static void addKnihovny(Knihovny knihovna)
         {

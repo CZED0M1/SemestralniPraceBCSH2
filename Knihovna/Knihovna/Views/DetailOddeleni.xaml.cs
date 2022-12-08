@@ -35,7 +35,7 @@ namespace Knihovna.Views
             {
                     Dispatcher.Invoke(() => CB.Items.Add(item.Nazev));
             }
-                Dispatcher.Invoke(() => CB.SelectedIndex = odd.Id);
+                Dispatcher.Invoke(() => CB.SelectedIndex = odd.Id-1);
                 Dispatcher.Invoke(() => lv1.ItemsSource = Knihovna.ViewModel.ZakazniciViewModel.Zakaznici);
                 Dispatcher.Invoke(() => lv2.ItemsSource = Knihovna.ViewModel.KnihaViewModel.Knihy);
             });
@@ -45,7 +45,7 @@ namespace Knihovna.Views
         public bool FilterZakaznik(object obj)
         {
             Zakaznik k = (Zakaznik)obj;
-            if (k.KnihovnaId == odd.Id) return true;
+            if (k.KnihovnaId == odd.Id-1) return true;
             return false;
         }
         public bool FilterKniha(object obj)

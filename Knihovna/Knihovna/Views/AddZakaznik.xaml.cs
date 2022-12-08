@@ -44,7 +44,6 @@ namespace Knihovna.Views
                 Zakaznik a = ZakazniciViewModel.Zakaznici.Where(x => x == zakaznik).First();
                     Dispatcher.Invoke(() => a.Jmeno = Name.Text);
                     Dispatcher.Invoke(() => a.Prijmeni = Surr.Text);
-                a.JmenoPr = a.Jmeno + " " + a.Prijmeni;
                     Dispatcher.Invoke(() => Knihovna.AddZakaznik.GetWindow(this).Close());
             }
 

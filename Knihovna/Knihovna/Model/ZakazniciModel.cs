@@ -50,14 +50,6 @@ namespace Knihovna.Model
             {
                 return jmeno + " " + prijmeni;
             }
-            set
-            {
-                if (JmenoPr != value)
-                {
-                    JmenoPr = value;
-                    RaisePropertyChanged("jmenoPr");
-                }
-            }
         }
         public string Jmeno
         {
