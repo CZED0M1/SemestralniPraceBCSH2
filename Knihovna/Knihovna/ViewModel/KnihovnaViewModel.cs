@@ -34,12 +34,10 @@ namespace Knihovna.ViewModel
             var CustToDelete = ZakazniciViewModel.Zakaznici.Where(z => z.KnihovnaId == knihovna.Id).ToList();
             foreach (var book in bookToDelete)
             {
-                MessageBox.Show(book.Nazev);
                 KnihaViewModel.Knihy.Remove(book);
             }
             foreach (var zak in CustToDelete)
             {
-                MessageBox.Show(zak.JmenoPr);
                 ZakazniciViewModel.Zakaznici.Remove(zak);
             }
             

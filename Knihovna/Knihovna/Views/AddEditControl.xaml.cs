@@ -28,12 +28,15 @@ namespace Knihovna.Views
         {
             
             InitializeComponent();
-
-                OddName.Text = nazev;
+            Thread threadAdd = new Thread(() =>
+            {
+                Dispatcher.Invoke(() => OddName.Text = nazev);
             if(nazev!="")
             {
-                Pridat.Content = "Editovat";
+                    Dispatcher.Invoke(() => Pridat.Content = "Editovat");
             }
+            });
+            threadAdd.Start();
 
         }
 

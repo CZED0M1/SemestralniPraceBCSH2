@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,26 +28,33 @@ namespace Knihovna.Views
         public Vypujcka()
         {
             InitializeComponent();
-            lv1.Items.Filter = FilterAll;
+            Thread threadAdd = new Thread(() =>
+            {
+                lv1.Items.Filter = FilterAll;
             lv1.Items.Refresh();
             foreach (var item in ZakazniciViewModel.Zakaznici)
             {
-                CB.Items.Add(item.JmenoPr);
+                    Dispatcher.Invoke(() => CB.Items.Add(item.JmenoPr));
             }
-            CB.SelectedItem = zak.JmenoPr;
+                Dispatcher.Invoke(() => CB.SelectedItem = zak.JmenoPr);
 
-            lv1.ItemsSource = KnihaViewModel.Knihy;
-            lv2.ItemsSource = VypujckyViewModel.Vypujcky;
-
+                Dispatcher.Invoke(() => lv1.ItemsSource = KnihaViewModel.Knihy);
+                Dispatcher.Invoke(() => lv2.ItemsSource = VypujckyViewModel.Vypujcky);
+            });
+            threadAdd.Start();
         }
 
         private void JinyZakaznik(object sender, SelectionChangedEventArgs e)
         {
-            if (ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).Any())
+            Thread threadAdd = new Thread(() =>
             {
-                zak = ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First();
-                lv2.Items.Filter = FilterVypujcky;
+                if (Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).Any()))
+            {
+                zak = Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
+                    Dispatcher.Invoke(() => lv2.Items.Filter = FilterVypujcky);
             }
+            });
+            threadAdd.Start();
         }
         public bool FilterAll(object obj)
         {
@@ -66,39 +74,47 @@ namespace Knihovna.Views
 
         private void VratitKnihu(object sender, RoutedEventArgs e)
         {
-            if (lv2.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                Model.Vypujcka vyp = (Model.Vypujcka)lv2.SelectedItem;
+                if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
+            {
+                Model.Vypujcka vyp = Dispatcher.Invoke(() => (Model.Vypujcka)lv2.SelectedItem);
                 Kniha k = vyp.Kniha;
-                KnihaViewModel.Knihy.Add(k);
-                VypujckyViewModel.Vypujcky.Remove(vyp);
-                zak = ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First();
-                zak.Vypujceno = zak.Vypujceno - 1;
+                    Dispatcher.Invoke(() => KnihaViewModel.Knihy.Add(k));
+                    Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Remove(vyp));
+                    Dispatcher.Invoke(() => zak = ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
+                    Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno - 1);
             }else
             {
                 MessageBox.Show("Není vybrána vypůjčená kniha", "Chyba");
             }
-            
+            });
+            threadAdd.Start();
+
 
         }
 
         private void VypujcitKnihu(object sender, RoutedEventArgs e)
         {
-            if (lv1.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                Kniha k =(Kniha)lv1.SelectedItem;
-                zak = ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First();
+                if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
+            {
+                Kniha k = Dispatcher.Invoke(() => (Kniha)lv1.SelectedItem);
+                zak = Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                 Model.Vypujcka vyp = new Model.Vypujcka { Kniha = k, Zakaznik=zak };
-                KnihaViewModel.Knihy.Remove(k);
-                VypujckyViewModel.Vypujcky.Add(vyp);
-                zak.Vypujceno = zak.Vypujceno +1;
+                    Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(k));
+                    Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Add(vyp));
+                    Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno +1);
             }
             else
             {
                 MessageBox.Show("Není vybrána kniha", "Chyba");
             }
+            });
+            threadAdd.Start();
 
 
-}
+        }
     }
 }
