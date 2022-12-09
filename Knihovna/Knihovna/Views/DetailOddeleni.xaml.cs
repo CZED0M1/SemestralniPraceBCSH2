@@ -1,5 +1,6 @@
 ﻿using Knihovna.Model;
 using Knihovna.ViewModel;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -115,6 +116,7 @@ namespace Knihovna.Views
                 AddZakaznik.zakaznik = null;
             Knihovna.AddZakaznik page = new Knihovna.AddZakaznik();
             page.Show();
+
         }
         private void editKniha(object sender, RoutedEventArgs e)
         {
@@ -150,9 +152,19 @@ namespace Knihovna.Views
         {
             Thread threadAdd = new Thread(() =>
             {
-                if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
+            if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
             {
-                    Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove((Kniha)lv2.SelectedItem));
+                    Kniha a = Dispatcher.Invoke(() => (Kniha)lv2.SelectedItem);
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                {
+                    var col = db.GetCollection<Kniha>("knihy");
+                    {
+                        
+                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(a.Id));
+                            col.Delete(value);
+                        }
+                    }
+                    Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(a));
             }
             else
             {
@@ -166,9 +178,18 @@ namespace Knihovna.Views
         {
             Thread threadAdd = new Thread(() =>
             {
+            Zakaznik z = Dispatcher.Invoke(() => (Zakaznik)lv1.SelectedItem);
                 if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
                 {
-                    Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Remove((Zakaznik)lv1.SelectedItem));
+                    Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Remove(z));
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+                    {
+                        var col = db.GetCollection<Zakaznik>("zakaznik");
+                        {
+                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(z.Id));
+                            col.Delete(value);
+                        }
+                    }
                 }
                 else
                 {

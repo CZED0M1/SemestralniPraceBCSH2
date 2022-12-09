@@ -46,6 +46,8 @@ namespace Knihovna.Views
             Add page = new Add();
             page.Show(); 
             lv1.Items.Refresh();
+
+
         }
 
         //DELETE

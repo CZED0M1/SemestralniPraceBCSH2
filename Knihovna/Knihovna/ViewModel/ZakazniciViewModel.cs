@@ -32,6 +32,7 @@ namespace Knihovna.ViewModel
             //    foreach (var item in Zakaznici)
             //    {
             //        col.Insert(item);
+
             //    }
             //}
 

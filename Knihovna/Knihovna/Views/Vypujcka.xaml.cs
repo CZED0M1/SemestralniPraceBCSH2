@@ -1,5 +1,6 @@
 ﻿using Knihovna.Model;
 using Knihovna.ViewModel;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,7 @@ namespace Knihovna.Views
         {
             Thread threadAdd = new Thread(() =>
             {
+                
                 if (Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).Any()))
             {
                 zak = Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
@@ -63,7 +65,7 @@ namespace Knihovna.Views
         public bool FilterVypujcky(object obj)
         {
             Model.Vypujcka vypujcka = (Model.Vypujcka)obj;
-            if (vypujcka.Zakaznik.Equals(zak))
+            if (vypujcka.Zakaznik.JmenoPr.Equals(zak.JmenoPr))
             {
                 return true;
             }
@@ -81,10 +83,37 @@ namespace Knihovna.Views
                 Model.Vypujcka vyp = Dispatcher.Invoke(() => (Model.Vypujcka)lv2.SelectedItem);
                 Kniha k = vyp.Kniha;
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Add(k));
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                    {
+                        var col = db.GetCollection<Kniha>("knihy");
+                        {
+                            col.Insert(k);
+                        }
+                    }
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Vypujcky.db"))
+                    {
+                        var col = db.GetCollection<Vypujcka>("vypujcky");
+                        {
+                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(vyp.Id));
+                            col.Delete(value);
+                        }
+                    }
                     Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Remove(vyp));
+
+                    
+
+
                     Dispatcher.Invoke(() => zak = ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                     Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno - 1);
-            }else
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+                    {
+                        var col = db.GetCollection<Zakaznik>("zakaznik");
+                        {
+                            col.Update(zak);
+                        }
+                    }
+                }
+                else
             {
                 MessageBox.Show("Není vybrána vypůjčená kniha", "Chyba");
             }
@@ -103,10 +132,32 @@ namespace Knihovna.Views
                 Kniha k = Dispatcher.Invoke(() => (Kniha)lv1.SelectedItem);
                 zak = Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                 Model.Vypujcka vyp = new Model.Vypujcka { Kniha = k, Zakaznik=zak };
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                    {
+                        var col = db.GetCollection<Kniha>("knihy");
+                        {
+                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(k.Id));
+                            col.Delete(value);
+                        }
+                    }
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Vypujcky.db"))
+                    {
+                        var col = db.GetCollection<Model.Vypujcka>("vypujcky");
+                        {
+                            col.Insert(vyp);
+                        }
+                    }
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(k));
                     Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Add(vyp));
                     Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno +1);
-            }
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+                    {
+                        var col = db.GetCollection<Zakaznik>("zakaznik");
+                        {
+                            col.Update(zak);
+                        }
+                    }
+                }
             else
             {
                 MessageBox.Show("Není vybrána kniha", "Chyba");

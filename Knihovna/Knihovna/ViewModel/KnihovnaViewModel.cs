@@ -65,7 +65,31 @@ namespace Knihovna.ViewModel
             {
                 ZakazniciViewModel.Zakaznici.Remove(zak);
             }
-            
+            using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Oddeleni.db"))
+            {
+                var col = db.GetCollection<Knihovny>("knihovny");
+                var value = new LiteDB.BsonValue(knihovna.Id);
+                col.Delete(value);
+            }
+            using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+            {
+                var col = db.GetCollection<Kniha>("knihy");
+                col.DeleteAll();
+                foreach (var item in KnihaViewModel.Knihy)
+                {
+                    col.Insert(item);
+                }
+            }
+            using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+            {
+                var col = db.GetCollection<Zakaznik>("zakaznik");
+                col.DeleteAll();
+                foreach (var item in ZakazniciViewModel.Zakaznici)
+                {
+                    col.Insert(item);
+                }
+            }
+
             Knihovny.Remove(knihovna);
         }
     }

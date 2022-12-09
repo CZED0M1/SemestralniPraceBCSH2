@@ -36,6 +36,8 @@ namespace Knihovna.ViewModel
             //        col.Insert(item);
             //    }
 
+
+
             using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
             {
                 var col = db.GetCollection<Kniha>("knihy");
@@ -46,8 +48,6 @@ namespace Knihovna.ViewModel
                         Knihy.Add(item);
                     }
                 }
-
-
             }
         }
     }

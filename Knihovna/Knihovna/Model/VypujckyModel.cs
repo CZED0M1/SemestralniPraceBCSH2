@@ -14,6 +14,17 @@ namespace Knihovna.Model
     {
         private Kniha kniha;
         private Zakaznik zakaznik;
+        private int id;
+
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                RaisePropertyChanged("Id");
+            }
+        }
 
 
         public Zakaznik Zakaznik
