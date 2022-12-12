@@ -155,7 +155,7 @@ namespace Knihovna.Views
             if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
             {
                     Kniha a = Dispatcher.Invoke(() => (Kniha)lv2.SelectedItem);
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
                 {
                     var col = db.GetCollection<Kniha>("knihy");
                     {
@@ -182,7 +182,7 @@ namespace Knihovna.Views
                 if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
                 {
                     Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Remove(z));
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
                     {
                         var col = db.GetCollection<Zakaznik>("zakaznik");
                         {

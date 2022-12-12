@@ -26,7 +26,7 @@ namespace Knihovna.ViewModel
             //ZakazniciViewModel.Zakaznici[0].Vypujceno = 2;
             //ZakazniciViewModel.Zakaznici[1].Vypujceno = 1;
 
-            //using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+            //using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
             //{
             //    var col = db.GetCollection<Zakaznik>("zakaznik");
             //    foreach (var item in Zakaznici)
@@ -37,7 +37,7 @@ namespace Knihovna.ViewModel
             //}
 
 
-            using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+            using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
             {
                 var col = db.GetCollection<Zakaznik>("zakaznik");
                 {

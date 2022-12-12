@@ -58,7 +58,7 @@ namespace Knihovna.Views
 
 
                     Dispatcher.Invoke(() => KnihovnaViewModel.addKnihovny(new Knihovny { Nazev = OddName.Text }));
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Oddeleni.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
                     {
                         var col = db.GetCollection<Knihovny>("knihovny");
                             col.Insert(KnihovnaViewModel.Knihovny[KnihovnaViewModel.Knihovny.Count-1]);
@@ -68,7 +68,7 @@ namespace Knihovna.Views
                     {
                         Dispatcher.Invoke(() => a.Nazev = OddName.Text);
                         nazev = "";
-                        using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Oddeleni.db"))
+                        using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
                         {
                             var col = db.GetCollection<Knihovny>("knihovny");
                             col.Update(a);
