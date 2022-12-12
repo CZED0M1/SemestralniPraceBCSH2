@@ -83,14 +83,14 @@ namespace Knihovna.Views
                 Model.Vypujcka vyp = Dispatcher.Invoke(() => (Model.Vypujcka)lv2.SelectedItem);
                 Kniha k = vyp.Kniha;
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Add(k));
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Knihy.db"))
                     {
                         var col = db.GetCollection<Kniha>("knihy");
                         {
                             col.Insert(k);
                         }
                     }
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Vypujcky.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Vypujcky.db"))
                     {
                         var col = db.GetCollection<Vypujcka>("vypujcky");
                         {
@@ -105,7 +105,7 @@ namespace Knihovna.Views
 
                     Dispatcher.Invoke(() => zak = ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                     Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno - 1);
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Zakaznici.db"))
                     {
                         var col = db.GetCollection<Zakaznik>("zakaznik");
                         {
@@ -132,7 +132,7 @@ namespace Knihovna.Views
                 Kniha k = Dispatcher.Invoke(() => (Kniha)lv1.SelectedItem);
                 zak = Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                 Model.Vypujcka vyp = new Model.Vypujcka { Kniha = k, Zakaznik=zak };
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Knihy.db"))
                     {
                         var col = db.GetCollection<Kniha>("knihy");
                         {
@@ -140,7 +140,7 @@ namespace Knihovna.Views
                             col.Delete(value);
                         }
                     }
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Vypujcky.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Vypujcky.db"))
                     {
                         var col = db.GetCollection<Model.Vypujcka>("vypujcky");
                         {
@@ -150,7 +150,7 @@ namespace Knihovna.Views
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(k));
                     Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Add(vyp));
                     Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno +1);
-                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Zakaznici.db"))
                     {
                         var col = db.GetCollection<Zakaznik>("zakaznik");
                         {
