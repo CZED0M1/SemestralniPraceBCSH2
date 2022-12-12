@@ -29,16 +29,5 @@ namespace Knihovna
             InitializeComponent();
            
         }
-
-        private void KnihovnaViewModel_Loaded(object sender, RoutedEventArgs e)
-        {
-            Knihovna.ViewModel.KnihovnaViewModel studentViewModelObject =
-                   new Knihovna.ViewModel.KnihovnaViewModel();
-            Knihovna.ViewModel.KnihovnaViewModel.LoadKnihovny();
-
-            KnihovnaViewModel.DataContext = studentViewModelObject;
-
-            
-        }
     }
 }

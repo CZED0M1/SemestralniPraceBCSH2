@@ -14,6 +14,20 @@ namespace Knihovna.Model
         private string isbn;
         private string autor;
         private int knihovnaId;
+        private int id;
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+                RaisePropertyChanged("Id");
+            }
+        }
 
         public int knId
         {

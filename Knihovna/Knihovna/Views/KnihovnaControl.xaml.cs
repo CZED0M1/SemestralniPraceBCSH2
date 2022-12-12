@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.Pkcs;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,58 +46,74 @@ namespace Knihovna.Views
             Add page = new Add();
             page.Show(); 
             lv1.Items.Refresh();
+
+
         }
 
         //DELETE
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (lv1.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                KnihovnaViewModel.removeKnihovny((Knihovny)lv1.SelectedItem);
+                if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
+            {
+                    Dispatcher.Invoke(() => KnihovnaViewModel.removeKnihovny((Knihovny)lv1.SelectedItem));
             }
             else
             {
                 MessageBox.Show("Není vybráno oddělení", "Chyba");
             }
+            });
+            threadAdd.Start();
         }
 
         //EDIT
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            if (lv1.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                Knihovny knihovna = (Knihovny)lv1.SelectedItem;
+                if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
+            {
+                Knihovny knihovna = Dispatcher.Invoke(() => (Knihovny)lv1.SelectedItem);
                 AddEditControl.nazev = knihovna.Nazev;
-                Add page = new Add();
-                page.Show();
+                    Add page = Dispatcher.Invoke(() => new Add());
+                    Dispatcher.Invoke(() => page.Show());
                
             }
             else
             {
                 MessageBox.Show("Není vybráno oddělení", "Chyba");
             }
+            });
+            threadAdd.Start();
         }
 
         //doubleClick
         private void detailOpen(object sender, MouseButtonEventArgs e)
         {
-            if (lv1.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                Knihovny knihovna = (Knihovny)lv1.SelectedItem;
+                if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
+            {
+                     Knihovny knihovna = Dispatcher.Invoke(() => (Knihovny)lv1.SelectedItem);
             DetailOddeleni.nazev = knihovna.Nazev;
             DetailOddeleni.odd = knihovna;
-            detailOdd page = new detailOdd();
-            page.Show();
+            detailOdd page = Dispatcher.Invoke(() => new detailOdd());
+            Dispatcher.Invoke(() => page.Show());
             }
             else
             {
                 MessageBox.Show("Není vybráno Oddělení", "Chyba");
             }
+            });
+            threadAdd.Start();
         }
 
         private void KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete) {
+            Thread threadAdd = new Thread(() =>
+            {
+                if (e.Key == Key.Delete) {
                 if (lv1.SelectedItems.Count > 0)
                 {
                     KnihovnaViewModel.Knihovny.Remove((Knihovny)lv1.SelectedItem);
@@ -118,8 +135,11 @@ namespace Knihovna.Views
                 {
                     MessageBox.Show("Není vybráno Oddělení", "Chyba");
                 }
+           
+        }
+            });
+            threadAdd.Start();
 
-            }
         }
     }
 }

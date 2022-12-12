@@ -1,5 +1,6 @@
 ﻿using Knihovna.Model;
 using Knihovna.ViewModel;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +29,15 @@ namespace Knihovna.Views
         {
             
             InitializeComponent();
-
-                OddName.Text = nazev;
+            Thread threadAdd = new Thread(() =>
+            {
+                Dispatcher.Invoke(() => OddName.Text = nazev);
             if(nazev!="")
             {
-                Pridat.Content = "Editovat";
+                    Dispatcher.Invoke(() => Pridat.Content = "Editovat");
             }
+            });
+            threadAdd.Start();
 
         }
 
@@ -44,22 +48,31 @@ namespace Knihovna.Views
             {
                 Thread threadAdd = new Thread(() =>
                 {
-                    Knihovny? a = null;
-                    //thread a dispatcher + bool open
-                    if (KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).Any())
-                        a = KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).First();
+                Knihovny? a = null;
+                //thread a dispatcher + bool open
+                if (KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).Any())
+                    a = KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).First();
 
-                    if (a == null)
+                if (a == null)
+                {
+
+
+                    Dispatcher.Invoke(() => KnihovnaViewModel.addKnihovny(new Knihovny { Nazev = OddName.Text }));
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Oddeleni.db"))
                     {
-
-                        
-                        Dispatcher.Invoke(() => KnihovnaViewModel.addKnihovny(new Knihovny { Nazev = OddName.Text }));
-
+                        var col = db.GetCollection<Knihovny>("knihovny");
+                            col.Insert(KnihovnaViewModel.Knihovny[KnihovnaViewModel.Knihovny.Count-1]);
+                        }
                     }
                     else
                     {
                         Dispatcher.Invoke(() => a.Nazev = OddName.Text);
                         nazev = "";
+                        using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Oddeleni.db"))
+                        {
+                            var col = db.GetCollection<Knihovny>("knihovny");
+                            col.Update(a);
+                        }
                     }
                     Dispatcher.Invoke(() => Add.GetWindow(this).Close());
                 });

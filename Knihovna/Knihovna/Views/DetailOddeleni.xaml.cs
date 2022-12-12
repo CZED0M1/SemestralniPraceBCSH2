@@ -1,10 +1,12 @@
 ﻿using Knihovna.Model;
 using Knihovna.ViewModel;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,19 +30,23 @@ namespace Knihovna.Views
         public DetailOddeleni()
         {
             InitializeComponent();
-            foreach (var item in KnihovnaViewModel.Knihovny)
+            Thread threadAdd = new Thread(() =>
             {
-                CB.Items.Add(item.Nazev);
+                foreach (var item in KnihovnaViewModel.Knihovny)
+            {
+                    Dispatcher.Invoke(() => CB.Items.Add(item.Nazev));
             }
-            CB.SelectedIndex = odd.Id;
-            lv1.ItemsSource = Knihovna.ViewModel.ZakazniciViewModel.Zakaznici;
-            lv2.ItemsSource = Knihovna.ViewModel.KnihaViewModel.Knihy;
+                Dispatcher.Invoke(() => CB.SelectedIndex = odd.Id-1);
+                Dispatcher.Invoke(() => lv1.ItemsSource = Knihovna.ViewModel.ZakazniciViewModel.Zakaznici);
+                Dispatcher.Invoke(() => lv2.ItemsSource = Knihovna.ViewModel.KnihaViewModel.Knihy);
+            });
+            threadAdd.Start();
         }
 
         public bool FilterZakaznik(object obj)
         {
             Zakaznik k = (Zakaznik)obj;
-            if (k.KnihovnaId == odd.Id) return true;
+            if (k.KnihovnaId == odd.Id-1) return true;
             return false;
         }
         public bool FilterKniha(object obj)
@@ -54,58 +60,67 @@ namespace Knihovna.Views
             AddKniha.kniha = null;
             AddKnihaW page = new AddKnihaW();
             page.Show();
-            
-           
         }
 
         private void openZakaznik(object sender, MouseButtonEventArgs e)
         {
-            if (lv1.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                Vypujcka.zak = (Zakaznik)lv1.SelectedItem;
+                if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
+            {
+                    Dispatcher.Invoke(() => Vypujcka.zak = (Zakaznik)lv1.SelectedItem);
 
-                VypujckyW page = new();
-                page.ShowDialog();
-                lv2.Items.Filter = FilterKniha;
+                VypujckyW page = Dispatcher.Invoke(() => new VypujckyW());
+                    Dispatcher.Invoke(() => page.ShowDialog());
+                    Dispatcher.Invoke(() => lv2.Items.Filter = FilterKniha);
             }else
             {
                 MessageBox.Show("Není vybrán zákazník", "Chyba");
             }
-            //Seznam vypůjčených knih
+            });
+            threadAdd.Start();
         }
 
         private void OpenKniha(object sender, MouseButtonEventArgs e)
         {
-            if (lv2.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                AddKniha.kniha = (Kniha)lv2.SelectedItem;
-                AddKnihaW page = new AddKnihaW();
-                page.ShowDialog();
+                if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
+            {
+                AddKniha.kniha = Dispatcher.Invoke(() => (Kniha)lv2.SelectedItem);
+                AddKnihaW page = Dispatcher.Invoke(() => new AddKnihaW());
+                    Dispatcher.Invoke(() => page.ShowDialog());
             }
             else
             {
                 MessageBox.Show("Není vybrána kniha", "Chyba");
             }
-            //v menu vypůjčit
+            });
+            threadAdd.Start();
         }
 
         private void JineOddeleni(object sender, SelectionChangedEventArgs e)
         {
-            odd = KnihovnaViewModel.Knihovny[CB.SelectedIndex];
-            lv1.Items.Filter = FilterZakaznik;
+            Thread threadAdd = new Thread(() =>
+            {
+                Dispatcher.Invoke(() => odd = KnihovnaViewModel.Knihovny[CB.SelectedIndex]);
+                Dispatcher.Invoke(() => lv1.Items.Filter = FilterZakaznik);
 
-            lv2.Items.Filter = FilterKniha;
+                Dispatcher.Invoke(() => lv2.Items.Filter = FilterKniha);
+            });
+            threadAdd.Start();
         }
 
         private void addZakaznik(object sender, RoutedEventArgs e)
         {
-            AddZakaznik.zakaznik = null;
+                AddZakaznik.zakaznik = null;
             Knihovna.AddZakaznik page = new Knihovna.AddZakaznik();
             page.Show();
+
         }
         private void editKniha(object sender, RoutedEventArgs e)
         {
-            if (lv2.SelectedItems.Count > 0)
+                if (lv2.SelectedItems.Count > 0)
             {
                 AddKniha.kniha = (Kniha)lv2.SelectedItem;
                 AddKnihaW page = new AddKnihaW();
@@ -115,12 +130,11 @@ namespace Knihovna.Views
             {
                 MessageBox.Show("Není vybrána kniha", "Chyba");
             }
-
         }
 
         private void editZakaznik(object sender, RoutedEventArgs e)
         {
-            if (lv1.SelectedItems.Count > 0)
+                if (lv1.SelectedItems.Count > 0)
             {
                 AddZakaznik.zakaznik = (Zakaznik)lv1.SelectedItem;
                 Knihovna.AddZakaznik page = new Knihovna.AddZakaznik();
@@ -132,33 +146,59 @@ namespace Knihovna.Views
             {
                 MessageBox.Show("Není vybrán zákazník", "Chyba");
             }
-
         }
 
         private void delKniha(object sender, RoutedEventArgs e)
         {
-            if (lv2.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                KnihaViewModel.Knihy.Remove((Kniha)lv2.SelectedItem);
+            if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
+            {
+                    Kniha a = Dispatcher.Invoke(() => (Kniha)lv2.SelectedItem);
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                {
+                    var col = db.GetCollection<Kniha>("knihy");
+                    {
+                        
+                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(a.Id));
+                            col.Delete(value);
+                        }
+                    }
+                    Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(a));
             }
             else
             {
                 MessageBox.Show("Není vybrána kniha", "Chyba");
             }
+            });
+            threadAdd.Start();
         }
 
         private void delZakaznik(object sender, RoutedEventArgs e)
         {
-            if (lv1.SelectedItems.Count > 0)
+            Thread threadAdd = new Thread(() =>
             {
-                ZakazniciViewModel.Zakaznici.Remove((Zakaznik)lv1.SelectedItem);
-            }
-            else
-            {
-                MessageBox.Show("Není vybrán zákazník", "Chyba");
-            }
+            Zakaznik z = Dispatcher.Invoke(() => (Zakaznik)lv1.SelectedItem);
+                if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
+                {
+                    Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Remove(z));
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
+                    {
+                        var col = db.GetCollection<Zakaznik>("zakaznik");
+                        {
+                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(z.Id));
+                            col.Delete(value);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Není vybrán zákazník", "Chyba");
+                }
+
+            });
+            threadAdd.Start();
+
         }
-
-
     }
 }

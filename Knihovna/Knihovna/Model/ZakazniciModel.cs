@@ -16,6 +16,20 @@ namespace Knihovna.Model
         private string prijmeni;
         private int vypujceno;
         private int knihovnaId;
+        private int id;
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+                RaisePropertyChanged("Id");
+            }
+        }
 
         public int KnihovnaId
         {
@@ -49,14 +63,6 @@ namespace Knihovna.Model
             get
             {
                 return jmeno + " " + prijmeni;
-            }
-            set
-            {
-                if (JmenoPr != value)
-                {
-                    JmenoPr = value;
-                    RaisePropertyChanged("jmenoPr");
-                }
             }
         }
         public string Jmeno

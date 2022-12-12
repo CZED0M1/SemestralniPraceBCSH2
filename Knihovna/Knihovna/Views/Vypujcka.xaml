@@ -4,7 +4,7 @@
    xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006" 
    xmlns:d = "http://schemas.microsoft.com/expression/blend/2008" 
    xmlns:local = "clr-namespace:Knihovna.Views" xmlns:model="clr-namespace:Knihovna.ViewModel" xmlns:model1="clr-namespace:Knihovna.Model"
-             mc:Ignorable = "d" Height="344" Width="605">
+             mc:Ignorable = "d" Height="344" Width="800">
 
     <Grid>
         <StackPanel Orientation = "Vertical">

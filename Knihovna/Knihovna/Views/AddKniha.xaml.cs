@@ -1,9 +1,11 @@
 ﻿using Knihovna.Model;
 using Knihovna.ViewModel;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,41 +28,69 @@ namespace Knihovna.Views
         public AddKniha()
         {
             InitializeComponent();
-            if (kniha!= null)
+            Thread threadAdd = new Thread(() =>
             {
-                Name.Text = kniha.Nazev;
-                auth.Text = kniha.Autor;
-                isbn.Text = kniha.ISBN;
-                Pridat.Content = "Editovat";
+                if (kniha!= null)
+            {
+                    Dispatcher.Invoke(() => Name.Text = kniha.Nazev);
+                    Dispatcher.Invoke(() => auth.Text = kniha.Autor);
+                    Dispatcher.Invoke(() => isbn.Text = kniha.ISBN);
+                    Dispatcher.Invoke(() => Pridat.Content = "Editovat");
             }
+            });
+            threadAdd.Start();
         }
 
 
         private void addKniha(object sender, RoutedEventArgs e)
         {
-            if (kniha != null)
+            Thread threadAdd = new Thread(() =>
+            {
+                if (kniha != null)
             {
                 Kniha a = KnihaViewModel.Knihy.Where(x => x == kniha).First();
-                a.Nazev = Name.Text;
-                a.Autor = auth.Text;
-                a.ISBN = isbn.Text;
-                AddKnihaW.GetWindow(this).Close();
+                    Dispatcher.Invoke(() => a.Nazev = Name.Text);
+                    Dispatcher.Invoke(() => a.Autor = auth.Text);
+                    Dispatcher.Invoke(() => a.ISBN = isbn.Text);
+
+                    using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                    {
+                        var col = db.GetCollection<Kniha>("knihy");
+                        {
+                            col.Update(a);
+                        }
+
+
+                    }
+
+                    Dispatcher.Invoke(() => AddKnihaW.GetWindow(this).Close());
             }
             else
             {
 
 
-                if (Name.Text.Length != 0 && auth.Text.Length != 0 && isbn.Text.Length != 0)
+                if (Dispatcher.Invoke(() => Name.Text.Length != 0  && auth.Text.Length != 0 && isbn.Text.Length != 0))
                 {
-                    KnihaViewModel.Knihy.Add(new Model.Kniha { Nazev = Name.Text, Autor = auth.Text, ISBN = isbn.Text, knId = DetailOddeleni.odd.Id});
-                    AddKnihaW.GetWindow(this).Close();
-                }
+                        Dispatcher.Invoke(() => KnihaViewModel.Knihy.Add(new Model.Kniha { Nazev = Name.Text, Autor = auth.Text, ISBN = isbn.Text, knId = DetailOddeleni.odd.Id}));
+                        using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
+                        {
+                            var col = db.GetCollection<Kniha>("knihy");
+                            {
+                                col.Insert(KnihaViewModel.Knihy[KnihaViewModel.Knihy.Count - 1]);
+                            }
+
+
+                        }
+                        Dispatcher.Invoke(()=> AddKnihaW.GetWindow(this).Close());
+                    }
                 else
                 {
                     MessageBox.Show("Nejsou vyplněny všechny položky", "Chyba");
                 }
                 kniha = null;
             }
+            });
+            threadAdd.Start();
         }
     }
 }
