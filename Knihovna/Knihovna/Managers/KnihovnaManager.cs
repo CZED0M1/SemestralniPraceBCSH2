@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Knihovna.Managers
 {
-    internal class KnihovnaManager
+    public class KnihovnaManager
     {
         Repo<Knihovny> Knihovna_Repository 
         {
@@ -29,11 +29,11 @@ namespace Knihovna.Managers
         }
         public void remove_Knihovna(Knihovny knihovna)
         {
-            Knihovna_Repository.RemoveById(knihovna);
+            Knihovna_Repository.RemoveById(knihovna.Id);
         }
         public void edit_Knihovna(Knihovny knihovna)
         {
-            Knihovna_Repository.RemoveById(knihovna);
+            Knihovna_Repository.UpdateById(knihovna);
         }
         public ObservableCollection<Knihovny> get_Knihovny()
         {
