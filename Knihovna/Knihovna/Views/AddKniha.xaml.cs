@@ -53,7 +53,7 @@ namespace Knihovna.Views
                     Dispatcher.Invoke(() => a.Nazev = Name.Text);
                     Dispatcher.Invoke(() => a.Autor = auth.Text);
                     Dispatcher.Invoke(() => a.ISBN = isbn.Text);
-                    KnihaViewModel.Kniha_Manager.edit_Kniha(a);
+                    KnihaViewModel.BookManager.editKniha(a);
 
 
                     Dispatcher.Invoke(() => AddKnihaW.GetWindow(this).Close());
@@ -65,7 +65,7 @@ namespace Knihovna.Views
                 if (Dispatcher.Invoke(() => Name.Text.Length != 0  && auth.Text.Length != 0 && isbn.Text.Length != 0))
                 {
                         Dispatcher.Invoke(() => KnihaViewModel.Knihy.Add(new Model.Kniha { Nazev = Name.Text, Autor = auth.Text, ISBN = isbn.Text, knId = DetailOddeleni.odd.Id}));
-                        KnihaViewModel.Kniha_Manager.add_Kniha(KnihaViewModel.Knihy[KnihaViewModel.Knihy.Count - 1]);
+                        KnihaViewModel.BookManager.addBook(KnihaViewModel.Knihy[KnihaViewModel.Knihy.Count - 1]);
                         Dispatcher.Invoke(()=> AddKnihaW.GetWindow(this).Close());
                     }
                 else

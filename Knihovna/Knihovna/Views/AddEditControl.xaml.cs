@@ -58,14 +58,14 @@ namespace Knihovna.Views
 
                         Dispatcher.Invoke(() => KnihovnaViewModel.addKnihovny(new Knihovny { Nazev = OddName.Text }));
 
-                        KnihovnaViewModel.Knihovna_Manager.add_Knihovna(KnihovnaViewModel.Knihovny[KnihovnaViewModel.Knihovny.Count - 1]);
+                        KnihovnaViewModel.LibraryManager.addLibrary(KnihovnaViewModel.Knihovny[KnihovnaViewModel.Knihovny.Count - 1]);
                     }
                     else
                     {
                         Dispatcher.Invoke(() => a.Nazev = OddName.Text);
                         nazev = "";
 
-                        KnihovnaViewModel.Knihovna_Manager.edit_Knihovna(a);
+                        KnihovnaViewModel.LibraryManager.editLibrary(a);
                     
                     }
                     Dispatcher.Invoke(() => Add.GetWindow(this).Close());

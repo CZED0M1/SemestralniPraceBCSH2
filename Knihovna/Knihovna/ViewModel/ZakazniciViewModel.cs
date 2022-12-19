@@ -19,15 +19,15 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
-        public static ZakaznikManager Zakaznik_Manager { get; set; }
+        public static CustomerManager CustomerManager { get; set; }
         public static void LoadZakaznici(Repository repository)
         {
 
 
 
-            ZakaznikManager zakaznikManager = new(repository);
-            Zakaznik_Manager = zakaznikManager;
-            if (zakaznikManager.get_Zakaznik().Count() == 0)
+            CustomerManager zakaznikManager = new(repository);
+            CustomerManager = zakaznikManager;
+            if (zakaznikManager.getCustomer().Count() == 0)
             {
                 Zakaznici.Add(new Zakaznik { Jmeno = "Dominik", Prijmeni = "Lopauer", KnihovnaId = 0 });
                 Zakaznici.Add(new Zakaznik { Jmeno = "Pavel", Prijmeni = "Horňak", KnihovnaId = 1 });
@@ -37,13 +37,13 @@ namespace Knihovna.ViewModel
 
                 foreach (var item in Zakaznici)
                 {
-                    zakaznikManager.add_Zakaznik(item);
+                    zakaznikManager.addCustomer(item);
                 }
             }
             else
             {
 
-                IEnumerable<Zakaznik> Kn = zakaznikManager.get_Zakaznik();
+                IEnumerable<Zakaznik> Kn = zakaznikManager.getCustomer();
                 foreach (var item in Kn)
                 {
                     Zakaznici.Add(item);

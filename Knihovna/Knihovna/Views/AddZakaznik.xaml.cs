@@ -47,7 +47,7 @@ namespace Knihovna.Views
                     Dispatcher.Invoke(() => a.Jmeno = Name.Text);
                     Dispatcher.Invoke(() => a.Prijmeni = Surr.Text);
                     Dispatcher.Invoke(() => Knihovna.AddZakaznik.GetWindow(this).Close());
-                    ZakazniciViewModel.Zakaznik_Manager.edit_Zakaznik(a);
+                    ZakazniciViewModel.CustomerManager.editCustomer(a);
                 }
 
             else
@@ -59,7 +59,7 @@ namespace Knihovna.Views
                         Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Add(a));
 
 
-                        Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznik_Manager.add_Zakaznik(new Model.Zakaznik { Jmeno = Name.Text, Prijmeni = Surr.Text, KnihovnaId = DetailOddeleni.odd.Id - 1, Vypujceno = 0 }));
+                        Dispatcher.Invoke(() => ZakazniciViewModel.CustomerManager.addCustomer(new Model.Zakaznik { Jmeno = Name.Text, Prijmeni = Surr.Text, KnihovnaId = DetailOddeleni.odd.Id - 1, Vypujceno = 0 }));
 
                         Dispatcher.Invoke(() => Knihovna.AddZakaznik.GetWindow(this).Close());
                 }

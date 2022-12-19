@@ -84,10 +84,10 @@ namespace Knihovna.Views
                     Kniha k = vyp.Kniha;
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Add(k));
 
-                    KnihaViewModel.Kniha_Manager.add_Kniha(k);
+                    KnihaViewModel.BookManager.addBook(k);
 
 
-                    VypujckyViewModel.Vypujcka_Manager.remove_Vypujcka(vyp);
+                    VypujckyViewModel.BorrowingManager.removeBorrowing(vyp);
 
                     Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Remove(vyp));
 
@@ -96,7 +96,7 @@ namespace Knihovna.Views
 
                     Dispatcher.Invoke(() => zak = ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                     Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno - 1);
-                    ZakazniciViewModel.Zakaznik_Manager.edit_Zakaznik(zak);
+                    ZakazniciViewModel.CustomerManager.editCustomer(zak);
                 }
                 else
                 {
@@ -118,13 +118,13 @@ namespace Knihovna.Views
                 zak = Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                 Model.Vypujcka vyp = new Model.Vypujcka { Kniha = k, Zakaznik=zak };
 
-                    KnihaViewModel.Kniha_Manager.remove_Kniha(k);
+                    KnihaViewModel.BookManager.removeKniha(k);
 
-                    VypujckyViewModel.Vypujcka_Manager.add_Vypujcka(vyp);
+                    VypujckyViewModel.BorrowingManager.addBorrowing(vyp);
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(k));
                     Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Add(vyp));
                     Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno +1);
-                    ZakazniciViewModel.Zakaznik_Manager.edit_Zakaznik(zak);
+                    ZakazniciViewModel.CustomerManager.editCustomer(zak);
                 }
             else
             {
