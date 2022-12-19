@@ -1,4 +1,6 @@
-﻿using Knihovna.Model;
+﻿using Knihovna.Managers;
+using Knihovna.Model;
+using Knihovna.Views;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -17,35 +19,32 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
-        public static void LoadZakaznici()
+        public static void LoadZakaznici(Repository repository)
         {
 
-            //Zakaznici.Add(new Zakaznik { Jmeno = "Dominik", Prijmeni = "Lopauer", KnihovnaId = 0 });
-            //Zakaznici.Add(new Zakaznik { Jmeno = "Pavel", Prijmeni = "Horňak", KnihovnaId = 1 });
-            //Zakaznici.Add(new Zakaznik { Jmeno = "Petr", Prijmeni = "Dolňak", KnihovnaId = 1 });
-            //ZakazniciViewModel.Zakaznici[0].Vypujceno = 2;
-            //ZakazniciViewModel.Zakaznici[1].Vypujceno = 1;
-
-            //using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
-            //{
-            //    var col = db.GetCollection<Zakaznik>("zakaznik");
-            //    foreach (var item in Zakaznici)
-            //    {
-            //        col.Insert(item);
-
-            //    }
-            //}
 
 
-            using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
+            ZakaznikManager zakaznikManager = new(repository);
+            if (zakaznikManager.get_Zakaznik().Count() == 0)
             {
-                var col = db.GetCollection<Zakaznik>("zakaznik");
+                Zakaznici.Add(new Zakaznik { Jmeno = "Dominik", Prijmeni = "Lopauer", KnihovnaId = 0 });
+                Zakaznici.Add(new Zakaznik { Jmeno = "Pavel", Prijmeni = "Horňak", KnihovnaId = 1 });
+                Zakaznici.Add(new Zakaznik { Jmeno = "Petr", Prijmeni = "Dolňak", KnihovnaId = 1 });
+                ZakazniciViewModel.Zakaznici[0].Vypujceno = 2;
+                ZakazniciViewModel.Zakaznici[1].Vypujceno = 1;
+
+                foreach (var item in Zakaznici)
                 {
-                    IEnumerable<Zakaznik> Kn = col.FindAll();
-                    foreach (var item in Kn)
-                    {
-                        Zakaznici.Add(item);
-                    }
+                    zakaznikManager.add_Zakaznik(item);
+                }
+            }
+            else
+            {
+
+                IEnumerable<Zakaznik> Kn = zakaznikManager.get_Zakaznik();
+                foreach (var item in Kn)
+                {
+                    Zakaznici.Add(item);
                 }
             }
         }

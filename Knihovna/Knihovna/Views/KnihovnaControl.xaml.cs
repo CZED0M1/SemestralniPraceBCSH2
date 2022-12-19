@@ -27,15 +27,18 @@ namespace Knihovna.Views
     {
         public KnihovnaControl()
         {
+            Repository repository = new();
+
             InitializeComponent();
             ViewModel.KnihovnaViewModel.Knihovny = new();
             ViewModel.KnihaViewModel.Knihy = new();
             ViewModel.ZakazniciViewModel.Zakaznici = new();
             ViewModel.VypujckyViewModel.Vypujcky = new();
-            ViewModel.KnihaViewModel.LoadKnihy();
-            ViewModel.ZakazniciViewModel.LoadZakaznici();
-            ViewModel.VypujckyViewModel.LoadVypujcky();
-            ViewModel.KnihovnaViewModel.LoadKnihovny();
+            ViewModel.KnihovnaViewModel.LoadKnihovny(repository);
+            ViewModel.KnihaViewModel.LoadKnihy(repository);
+            ViewModel.ZakazniciViewModel.LoadZakaznici(repository);
+            ViewModel.VypujckyViewModel.LoadVypujcky(repository);
+            
             lv1.ItemsSource = KnihovnaViewModel.Knihovny;
            
         }

@@ -1,54 +1,59 @@
-﻿using LiteDB;
+﻿using Knihovna.Model;
+using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Knihovna
 {
-
-    internal class Repo<TKey,Tvalue>
+    public class Repository
     {
-        LiteDatabase database;
-
-
-        public void Connect()
+        public LiteDatabase database
         {
-            try
-            {
-                database = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db");
-
-            }catch (Exception e)
-            {
-
-            }
-
+            get; set;  
         }
+
+        public Repository()
+        {
+            database = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\MyDb.db");
+        }
+
         public LiteDatabase GetInstance()
         {
-            if (database != null) return database;
-            else return null;
+            return database;
         }
-        public void GetById()
+    }
+    internal class Repo<TKey>
+    {
+        public string text
         {
-          LiteDatabase db= GetInstance();
+            get; set;
+        }
+        public ILiteCollection<TKey> col { get; set; }
+        public TKey GetById(int id)
+        {
+
             try
             {
-                var col = db.GetCollection<TKey>("vypujcky");
+                return col.FindById(id);
             }
             catch(Exception)
             {
 
             }
+            return default(TKey);
         }
+
         public void UpdateById(TKey a )
         {
-            LiteDatabase db = GetInstance();
             try
             {
-                var col = db.GetCollection<TKey>("vypujcky");
                 col.Update(a);
             }
             catch (Exception)
@@ -56,12 +61,12 @@ namespace Knihovna
 
             }
         }
+
         public void RemoveById(TKey a)
         {
-            LiteDatabase db = GetInstance();
+
             try
             {
-                var col = db.GetCollection<TKey>("vypujcky");
                 var value = new LiteDB.BsonValue(a);
                 col.Delete(value);
             }
@@ -70,17 +75,22 @@ namespace Knihovna
 
             }
         }
-        public void GetAll()
-        {
-            LiteDatabase db = GetInstance();
-            try
-            {
-                var col = db.GetCollection<TKey>();
-            }
-            catch (Exception)
-            {
 
+        public ObservableCollection<TKey> GetAll()
+        {
+            IEnumerable<TKey> ienu = col.FindAll();
+            ObservableCollection<TKey> collection = new ObservableCollection<TKey>();
+            foreach (var item in ienu)
+            {
+                collection.Add(item);
             }
+            return collection;
+            
+        }
+
+        public void Add(TKey a)
+        {
+            col.Insert(a);
         }
 
 
