@@ -3,6 +3,7 @@ using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,9 @@ namespace Knihovna
 
         public Repository()
         {
-            database = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\MyDb.db");
+            string _BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            database = new LiteDatabase(Path.GetFullPath(Path.Combine(_BaseDirectory, @"..\..\..\..\Db\MyDb.db")));
         }
 
         public LiteDatabase GetInstance()

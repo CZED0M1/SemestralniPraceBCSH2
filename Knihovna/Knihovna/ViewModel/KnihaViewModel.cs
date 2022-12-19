@@ -18,14 +18,14 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
-        public static KnihaManager Kniha_Manager { get; set; }
+        public static BookManager BookManager { get; set; }
         public static void LoadKnihy(Repository repository)
         {
             
 
-            KnihaManager knihaManager = new(repository);
-            Kniha_Manager = knihaManager;
-            if (knihaManager.get_Kniha().Count() == 0)
+            BookManager knihaManager = new(repository);
+            BookManager = knihaManager;
+            if (knihaManager.getKniha().Count() == 0)
             {
                 Knihy.Add(new Kniha { Nazev = "Harry Potter", ISBN = "1241241", Autor = "J.K. Rowlingová", knId = 1 });
                 Knihy.Add(new Kniha { Nazev = "RUR", ISBN = "1251361", Autor = "Karel Čapek", knId = 1 });
@@ -36,13 +36,13 @@ namespace Knihovna.ViewModel
                 Knihy.Add(new Kniha { Nazev = "Nové Pohledy", ISBN = "99129351", Autor = "Alastair Bonnett", knId = 6 });
                 foreach (var item in Knihy)
                 {
-                    knihaManager.add_Kniha(item);
+                    knihaManager.addBook(item);
                 }
             }
             else
             {
 
-                IEnumerable<Kniha> Kn = knihaManager.get_Kniha();
+                IEnumerable<Kniha> Kn = knihaManager.getKniha();
                 foreach (var item in Kn)
                 {
                     Knihy.Add(item);

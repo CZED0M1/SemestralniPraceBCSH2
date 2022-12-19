@@ -156,7 +156,7 @@ namespace Knihovna.Views
             if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
             {
                     Kniha a = Dispatcher.Invoke(() => (Kniha)lv2.SelectedItem);
-                    KnihaViewModel.Kniha_Manager.remove_Kniha(a);
+                    KnihaViewModel.BookManager.removeKniha(a);
 
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(a));
             }
@@ -177,7 +177,7 @@ namespace Knihovna.Views
                 {
                     Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Remove(z));
 
-                    ZakazniciViewModel.Zakaznik_Manager.remove_Zakaznik(z);
+                    ZakazniciViewModel.CustomerManager.removeCustomer(z);
                 }
                 else
                 {

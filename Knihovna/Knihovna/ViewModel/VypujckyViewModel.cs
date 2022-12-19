@@ -18,14 +18,14 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
-        public static VypujckaManager Vypujcka_Manager { get; set; }
+        public static BorrowingManager BorrowingManager { get; set; }
         public static void LoadVypujcky(Repository repository)
         {
 
 
-            VypujckaManager vypujckaManager = new(repository);
-            Vypujcka_Manager = vypujckaManager;
-            if (vypujckaManager.get_Vypujcka().Count() == 0)
+            BorrowingManager vypujckaManager = new(repository);
+            BorrowingManager = vypujckaManager;
+            if (vypujckaManager.getBorrowing().Count() == 0)
             {
                 Kniha kn = new Kniha { Nazev = "S kouzelnickou hůlkou", Autor = "Felton Tom", ISBN = "263236236", knId = 4 };
                 Kniha kn2 = new Kniha { Nazev = "Aristokratka pod palbou lásky", Autor = " Evžen Boček", ISBN = "8935882", knId = 4 };
@@ -36,13 +36,13 @@ namespace Knihovna.ViewModel
 
                 foreach (var item in Vypujcky)
                 {
-                    vypujckaManager.add_Vypujcka(item);
+                    vypujckaManager.addBorrowing(item);
                 }
             }
             else
             {
 
-                IEnumerable<Vypujcka> Kn = vypujckaManager.get_Vypujcka();
+                IEnumerable<Vypujcka> Kn = vypujckaManager.getBorrowing();
                 foreach (var item in Kn)
                 {
                     Vypujcky.Add(item);
