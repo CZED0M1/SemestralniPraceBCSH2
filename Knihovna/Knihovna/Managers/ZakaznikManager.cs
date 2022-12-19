@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Knihovna.Managers
 {
-    internal class ZakaznikManager
+   public class ZakaznikManager
     {
         Repo<Zakaznik>  Zakaznik_Repository
         {
@@ -27,11 +27,11 @@ namespace Knihovna.Managers
         }
         public void remove_Zakaznik(Zakaznik zakaznik)
         {
-            Zakaznik_Repository.RemoveById(zakaznik);
+            Zakaznik_Repository.RemoveById(zakaznik.Id);
         }
         public void edit_Zakaznik(Zakaznik zakaznik)
         {
-            Zakaznik_Repository.RemoveById(zakaznik);
+            Zakaznik_Repository.UpdateById(zakaznik);
         }
         public ObservableCollection<Zakaznik> get_Zakaznik()
         {

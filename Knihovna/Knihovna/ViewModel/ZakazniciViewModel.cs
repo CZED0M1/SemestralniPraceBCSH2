@@ -19,12 +19,14 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
+        public static ZakaznikManager Zakaznik_Manager { get; set; }
         public static void LoadZakaznici(Repository repository)
         {
 
 
 
             ZakaznikManager zakaznikManager = new(repository);
+            Zakaznik_Manager = zakaznikManager;
             if (zakaznikManager.get_Zakaznik().Count() == 0)
             {
                 Zakaznici.Add(new Zakaznik { Jmeno = "Dominik", Prijmeni = "Lopauer", KnihovnaId = 0 });

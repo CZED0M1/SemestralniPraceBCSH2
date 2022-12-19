@@ -1,4 +1,5 @@
-﻿using Knihovna.Model;
+﻿using Knihovna.Managers;
+using Knihovna.Model;
 using Knihovna.ViewModel;
 using LiteDB;
 using System;
@@ -46,13 +47,7 @@ namespace Knihovna.Views
                     Dispatcher.Invoke(() => a.Jmeno = Name.Text);
                     Dispatcher.Invoke(() => a.Prijmeni = Surr.Text);
                     Dispatcher.Invoke(() => Knihovna.AddZakaznik.GetWindow(this).Close());
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
-                    {
-                        var col = db.GetCollection<Zakaznik>("zakaznik");
-                        {
-                            col.Update(a);
-                        }
-                    }
+                    ZakazniciViewModel.Zakaznik_Manager.edit_Zakaznik(a);
                 }
 
             else
@@ -62,13 +57,9 @@ namespace Knihovna.Views
                         Zakaznik a=null;
                         Dispatcher.Invoke(() => a = new Model.Zakaznik { Jmeno = Name.Text, Prijmeni = Surr.Text, KnihovnaId = DetailOddeleni.odd.Id - 1, Vypujceno = 0 });
                         Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Add(a));
-                        using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
-                        {
-                            var col = db.GetCollection<Zakaznik>("zakaznik");
-                            {
-                                Dispatcher.Invoke(() => col.Insert(new Model.Zakaznik { Jmeno = Name.Text, Prijmeni = Surr.Text, KnihovnaId = DetailOddeleni.odd.Id - 1, Vypujceno = 0 }));
-                            }
-                        }
+
+
+                        Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznik_Manager.add_Zakaznik(new Model.Zakaznik { Jmeno = Name.Text, Prijmeni = Surr.Text, KnihovnaId = DetailOddeleni.odd.Id - 1, Vypujceno = 0 }));
 
                         Dispatcher.Invoke(() => Knihovna.AddZakaznik.GetWindow(this).Close());
                 }

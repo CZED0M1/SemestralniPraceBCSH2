@@ -18,11 +18,13 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
+        public static VypujckaManager Vypujcka_Manager { get; set; }
         public static void LoadVypujcky(Repository repository)
         {
 
 
             VypujckaManager vypujckaManager = new(repository);
+            Vypujcka_Manager = vypujckaManager;
             if (vypujckaManager.get_Vypujcka().Count() == 0)
             {
                 Kniha kn = new Kniha { Nazev = "S kouzelnickou hůlkou", Autor = "Felton Tom", ISBN = "263236236", knId = 4 };

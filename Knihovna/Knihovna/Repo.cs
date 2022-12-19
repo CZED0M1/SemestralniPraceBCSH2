@@ -62,12 +62,12 @@ namespace Knihovna
             }
         }
 
-        public void RemoveById(TKey a)
+        public void RemoveById(int id)
         {
 
             try
             {
-                var value = new LiteDB.BsonValue(a);
+                var value = new LiteDB.BsonValue(id);
                 col.Delete(value);
             }
             catch (Exception)

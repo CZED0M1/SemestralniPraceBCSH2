@@ -18,9 +18,11 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
+        public static KnihovnaManager Knihovna_Manager { get; set; }
         public static void LoadKnihovny(Repository repo)
         {
             KnihovnaManager knihovnaManager = new(repo);
+            Knihovna_Manager= knihovnaManager;
             if (knihovnaManager.get_Knihovny().Count() == 0)
             {
                 Knihovny.Add(new Knihovny { Nazev = "A", Id = 1 });
@@ -61,37 +63,16 @@ namespace Knihovna.ViewModel
             foreach (var book in bookToDelete)
             {
                 KnihaViewModel.Knihy.Remove(book);
+                KnihaViewModel.Kniha_Manager.remove_Kniha(book);
             }
             foreach (var zak in CustToDelete)
             {
                 ZakazniciViewModel.Zakaznici.Remove(zak);
-            }
-            using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Oddeleni.db"))
-            {
-                var col = db.GetCollection<Knihovny>("knihovny");
-                var value = new LiteDB.BsonValue(knihovna.Id);
-                col.Delete(value);
-            }
-            using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Knihy.db"))
-            {
-                var col = db.GetCollection<Kniha>("knihy");
-                col.DeleteAll();
-                foreach (var item in KnihaViewModel.Knihy)
-                {
-                    col.Insert(item);
-                }
-            }
-            using (var db = new LiteDatabase(@"E:\c#2\semestralka\Knihovna\Db\Zakaznici.db"))
-            {
-                var col = db.GetCollection<Zakaznik>("zakaznik");
-                col.DeleteAll();
-                foreach (var item in ZakazniciViewModel.Zakaznici)
-                {
-                    col.Insert(item);
-                }
+                ZakazniciViewModel.Zakaznik_Manager.remove_Zakaznik(zak);
             }
 
-            Knihovny.Remove(knihovna);
+                Knihovna_Manager.remove_Knihovna(knihovna);
+                Knihovny.Remove(knihovna);
         }
     }
 }

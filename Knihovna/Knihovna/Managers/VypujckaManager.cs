@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Knihovna.Managers
 {
-    internal class VypujckaManager
+    public class VypujckaManager
     {
         Repo<Vypujcka> Vypujcka_Repository
         {
@@ -27,11 +27,11 @@ namespace Knihovna.Managers
         }
         public void remove_Vypujcka(Vypujcka vypujcka)
         {
-            Vypujcka_Repository.RemoveById(vypujcka);
+            Vypujcka_Repository.RemoveById(vypujcka.Id);
         }
         public void edit_Vypujcka(Vypujcka vypujcka)
         {
-            Vypujcka_Repository.RemoveById(vypujcka);
+            Vypujcka_Repository.UpdateById(vypujcka);
         }
         public ObservableCollection<Vypujcka> get_Vypujcka()
         {

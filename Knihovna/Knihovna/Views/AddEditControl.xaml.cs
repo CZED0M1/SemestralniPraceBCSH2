@@ -49,30 +49,24 @@ namespace Knihovna.Views
                 Thread threadAdd = new Thread(() =>
                 {
                 Knihovny? a = null;
-                //thread a dispatcher + bool open
                 if (KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).Any())
                     a = KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).First();
 
-                if (a == null)
-                {
-
-
-                    Dispatcher.Invoke(() => KnihovnaViewModel.addKnihovny(new Knihovny { Nazev = OddName.Text }));
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
+                    if (a == null)
                     {
-                        var col = db.GetCollection<Knihovny>("knihovny");
-                            col.Insert(KnihovnaViewModel.Knihovny[KnihovnaViewModel.Knihovny.Count-1]);
-                        }
+
+
+                        Dispatcher.Invoke(() => KnihovnaViewModel.addKnihovny(new Knihovny { Nazev = OddName.Text }));
+
+                        KnihovnaViewModel.Knihovna_Manager.add_Knihovna(KnihovnaViewModel.Knihovny[KnihovnaViewModel.Knihovny.Count - 1]);
                     }
                     else
                     {
                         Dispatcher.Invoke(() => a.Nazev = OddName.Text);
                         nazev = "";
-                        using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
-                        {
-                            var col = db.GetCollection<Knihovny>("knihovny");
-                            col.Update(a);
-                        }
+
+                        KnihovnaViewModel.Knihovna_Manager.edit_Knihovna(a);
+                    
                     }
                     Dispatcher.Invoke(() => Add.GetWindow(this).Close());
                 });

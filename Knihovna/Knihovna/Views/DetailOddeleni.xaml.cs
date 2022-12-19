@@ -36,7 +36,7 @@ namespace Knihovna.Views
             {
                     Dispatcher.Invoke(() => CB.Items.Add(item.Nazev));
             }
-                Dispatcher.Invoke(() => CB.SelectedIndex = odd.Id-1);
+                Dispatcher.Invoke(() => CB.SelectedItem = odd.Nazev);
                 Dispatcher.Invoke(() => lv1.ItemsSource = Knihovna.ViewModel.ZakazniciViewModel.Zakaznici);
                 Dispatcher.Invoke(() => lv2.ItemsSource = Knihovna.ViewModel.KnihaViewModel.Knihy);
             });
@@ -103,7 +103,8 @@ namespace Knihovna.Views
         {
             Thread threadAdd = new Thread(() =>
             {
-                Dispatcher.Invoke(() => odd = KnihovnaViewModel.Knihovny[CB.SelectedIndex]);
+
+                Dispatcher.Invoke(() => odd = KnihovnaViewModel.Knihovny.Where(k => k.Nazev == CB.SelectedItem.ToString()).First());
                 Dispatcher.Invoke(() => lv1.Items.Filter = FilterZakaznik);
 
                 Dispatcher.Invoke(() => lv2.Items.Filter = FilterKniha);
@@ -155,15 +156,8 @@ namespace Knihovna.Views
             if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
             {
                     Kniha a = Dispatcher.Invoke(() => (Kniha)lv2.SelectedItem);
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
-                {
-                    var col = db.GetCollection<Kniha>("knihy");
-                    {
-                        
-                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(a.Id));
-                            col.Delete(value);
-                        }
-                    }
+                    KnihaViewModel.Kniha_Manager.remove_Kniha(a);
+
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(a));
             }
             else
@@ -182,14 +176,8 @@ namespace Knihovna.Views
                 if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
                 {
                     Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Remove(z));
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
-                    {
-                        var col = db.GetCollection<Zakaznik>("zakaznik");
-                        {
-                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(z.Id));
-                            col.Delete(value);
-                        }
-                    }
+
+                    ZakazniciViewModel.Zakaznik_Manager.remove_Zakaznik(z);
                 }
                 else
                 {

@@ -18,11 +18,13 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
+        public static KnihaManager Kniha_Manager { get; set; }
         public static void LoadKnihy(Repository repository)
         {
             
 
             KnihaManager knihaManager = new(repository);
+            Kniha_Manager = knihaManager;
             if (knihaManager.get_Kniha().Count() == 0)
             {
                 Knihy.Add(new Kniha { Nazev = "Harry Potter", ISBN = "1241241", Autor = "J.K. Rowlingová", knId = 1 });

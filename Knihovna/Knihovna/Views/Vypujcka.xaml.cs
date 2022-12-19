@@ -79,44 +79,29 @@ namespace Knihovna.Views
             Thread threadAdd = new Thread(() =>
             {
                 if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
-            {
-                Model.Vypujcka vyp = Dispatcher.Invoke(() => (Model.Vypujcka)lv2.SelectedItem);
-                Kniha k = vyp.Kniha;
+                {
+                    Model.Vypujcka vyp = Dispatcher.Invoke(() => (Model.Vypujcka)lv2.SelectedItem);
+                    Kniha k = vyp.Kniha;
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Add(k));
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Knihy.db"))
-                    {
-                        var col = db.GetCollection<Kniha>("knihy");
-                        {
-                            col.Insert(k);
-                        }
-                    }
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Vypujcky.db"))
-                    {
-                        var col = db.GetCollection<Vypujcka>("vypujcky");
-                        {
-                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(vyp.Id));
-                            col.Delete(value);
-                        }
-                    }
+
+                    KnihaViewModel.Kniha_Manager.add_Kniha(k);
+
+
+                    VypujckyViewModel.Vypujcka_Manager.remove_Vypujcka(vyp);
+
                     Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Remove(vyp));
 
-                    
+
 
 
                     Dispatcher.Invoke(() => zak = ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                     Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno - 1);
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Zakaznici.db"))
-                    {
-                        var col = db.GetCollection<Zakaznik>("zakaznik");
-                        {
-                            col.Update(zak);
-                        }
-                    }
+                    ZakazniciViewModel.Zakaznik_Manager.edit_Zakaznik(zak);
                 }
                 else
-            {
-                MessageBox.Show("Není vybrána vypůjčená kniha", "Chyba");
-            }
+                {
+                    MessageBox.Show("Není vybrána vypůjčená kniha", "Chyba");
+                }
             });
             threadAdd.Start();
 
@@ -132,31 +117,14 @@ namespace Knihovna.Views
                 Kniha k = Dispatcher.Invoke(() => (Kniha)lv1.SelectedItem);
                 zak = Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Where(z => z.JmenoPr == CB.SelectedItem.ToString()).First());
                 Model.Vypujcka vyp = new Model.Vypujcka { Kniha = k, Zakaznik=zak };
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Knihy.db"))
-                    {
-                        var col = db.GetCollection<Kniha>("knihy");
-                        {
-                            var value = Dispatcher.Invoke(() => new LiteDB.BsonValue(k.Id));
-                            col.Delete(value);
-                        }
-                    }
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Vypujcky.db"))
-                    {
-                        var col = db.GetCollection<Model.Vypujcka>("vypujcky");
-                        {
-                            col.Insert(vyp);
-                        }
-                    }
+
+                    KnihaViewModel.Kniha_Manager.remove_Kniha(k);
+
+                    VypujckyViewModel.Vypujcka_Manager.add_Vypujcka(vyp);
                     Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(k));
                     Dispatcher.Invoke(() => VypujckyViewModel.Vypujcky.Add(vyp));
                     Dispatcher.Invoke(() => zak.Vypujceno = zak.Vypujceno +1);
-                    using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\Zakaznici.db"))
-                    {
-                        var col = db.GetCollection<Zakaznik>("zakaznik");
-                        {
-                            col.Update(zak);
-                        }
-                    }
+                    ZakazniciViewModel.Zakaznik_Manager.edit_Zakaznik(zak);
                 }
             else
             {

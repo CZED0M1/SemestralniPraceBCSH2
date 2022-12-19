@@ -27,11 +27,11 @@ namespace Knihovna.Managers
         }
         public void remove_Kniha(Kniha kniha)
         {
-            Kniha_Repository.RemoveById(kniha);
+            Kniha_Repository.RemoveById(kniha.Id);
         }
         public void edit_Kniha(Kniha kniha)
         {
-            Kniha_Repository.RemoveById(kniha);
+            Kniha_Repository.UpdateById(kniha);
         }
         public ObservableCollection<Kniha> get_Kniha()
         {
