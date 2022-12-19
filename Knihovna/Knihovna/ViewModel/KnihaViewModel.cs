@@ -1,4 +1,5 @@
-﻿using Knihovna.Model;
+﻿using Knihovna.Managers;
+using Knihovna.Model;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -17,43 +18,40 @@ namespace Knihovna.ViewModel
             get;
             set;
         }
-        public static void LoadKnihy()
+        public static void LoadKnihy(Repository repository)
         {
+            
 
-            //Knihy.Add(new Kniha { Nazev = "Harry Potter", ISBN = "1241241", Autor = "J.K. Rowlingová", knId = 1 });
-            //Knihy.Add(new Kniha { Nazev = "RUR", ISBN = "1251361", Autor = "Karel Čapek", knId = 1 });
-            //Knihy.Add(new Kniha { Nazev = "Osudné svědectví", ISBN = "4276247", Autor = "Robert Bryndza", knId = 2 });
-            //Knihy.Add(new Kniha { Nazev = "Pavouk", ISBN = "4213247", Autor = "Lars Kepler", knId = 2 });
-            //Knihy.Add(new Kniha { Nazev = "Znamenitá mrtvola", ISBN = "2351356", Autor = "Agustina Bazterrica", knId = 2 });
-            //Knihy.Add(new Kniha { Nazev = "Čarodějnictví pro každý den", ISBN = "672175798", Autor = "Deborah Blake", knId = 5 });
-            //Knihy.Add(new Kniha { Nazev = "Nové Pohledy", ISBN = "99129351", Autor = "Alastair Bonnett", knId = 6 });
-            //using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
-            //{
-            //    var col = db.GetCollection<Kniha>("knihy");
-            //    foreach (var item in Knihy)
-            //    {
-            //        col.Insert(item);
-            //    }
-            //}
-            // Databaze trida - jednou vytvorit litedabatabase
-            //db repository manager
-
-
-
-            using (var db = new LiteDatabase(@"C:\Users\st64521\Documents\GitHub\SemestralniPraceBCSH2\Knihovna\Db\MyDb.db"))
+            KnihaManager knihaManager = new(repository);
+            if (knihaManager.get_Kniha().Count() == 0)
             {
-                var col = db.GetCollection<Kniha>("knihy");
+                Knihy.Add(new Kniha { Nazev = "Harry Potter", ISBN = "1241241", Autor = "J.K. Rowlingová", knId = 1 });
+                Knihy.Add(new Kniha { Nazev = "RUR", ISBN = "1251361", Autor = "Karel Čapek", knId = 1 });
+                Knihy.Add(new Kniha { Nazev = "Osudné svědectví", ISBN = "4276247", Autor = "Robert Bryndza", knId = 2 });
+                Knihy.Add(new Kniha { Nazev = "Pavouk", ISBN = "4213247", Autor = "Lars Kepler", knId = 2 });
+                Knihy.Add(new Kniha { Nazev = "Znamenitá mrtvola", ISBN = "2351356", Autor = "Agustina Bazterrica", knId = 2 });
+                Knihy.Add(new Kniha { Nazev = "Čarodějnictví pro každý den", ISBN = "672175798", Autor = "Deborah Blake", knId = 5 });
+                Knihy.Add(new Kniha { Nazev = "Nové Pohledy", ISBN = "99129351", Autor = "Alastair Bonnett", knId = 6 });
+                foreach (var item in Knihy)
                 {
+                    knihaManager.add_Kniha(item);
+                }
+            }
+            else
+            {
 
-                    IEnumerable<Kniha> Kn = col.FindAll();
-                    foreach (var item in Kn)
-                    {
-                        Knihy.Add(item);
-                    }
+                IEnumerable<Kniha> Kn = knihaManager.get_Kniha();
+                foreach (var item in Kn)
+                {
+                    Knihy.Add(item);
                 }
             }
         }
     }
 }
+
+            
+
+
 
 
