@@ -21,45 +21,45 @@ using System.Windows.Shapes;
 namespace Knihovna.Views
 {
     /// <summary>
-    /// Interaction logic for AddZakaznik.xaml
+    /// Interaction logic for AddCustomer.xaml
     /// </summary>
-    public partial class AddZakaznik : UserControl
+    public partial class AddCustomer : UserControl
     {
-        public static Zakaznik zakaznik=null;
-        public AddZakaznik()
+        public static Customer customer=null;
+        public AddCustomer()
         {
             InitializeComponent();
-                if (zakaznik !=null)
+                if (customer !=null)
             {
-                Name.Text = zakaznik.Jmeno;
-                Surr.Text = zakaznik.Prijmeni;
+                Name.Text = customer.Name;
+                Surr.Text = customer.Surrname;
                 Pridat.Content = "Editovat";
             }
         }
 
-        private void addZakaznik(object sender, RoutedEventArgs e)
+        private void addCustomer(object sender, RoutedEventArgs e)
         {
             Thread threadAdd = new Thread(() =>
             {
-                if (zakaznik != null)
+                if (customer != null)
             {
-                Zakaznik a = ZakazniciViewModel.Zakaznici.Where(x => x == zakaznik).First();
-                    Dispatcher.Invoke(() => a.Jmeno = Name.Text);
-                    Dispatcher.Invoke(() => a.Prijmeni = Surr.Text);
+                Customer a = CustomerViewModel.Customers.Where(x => x == customer).First();
+                    Dispatcher.Invoke(() => a.Name = Name.Text);
+                    Dispatcher.Invoke(() => a.Surrname = Surr.Text);
                     Dispatcher.Invoke(() => Knihovna.AddZakaznik.GetWindow(this).Close());
-                    ZakazniciViewModel.CustomerManager.editCustomer(a);
+                    CustomerViewModel.CustomerManager.editCustomer(a);
                 }
 
             else
             {
                 if (Dispatcher.Invoke(() => Name.Text.Length != 0 && Surr.Text.Length != 0))
                 {
-                        Zakaznik a=null;
-                        Dispatcher.Invoke(() => a = new Model.Zakaznik { Jmeno = Name.Text, Prijmeni = Surr.Text, KnihovnaId = DetailOddeleni.odd.Id - 1, Vypujceno = 0 });
-                        Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Add(a));
+                        Customer a=null;
+                        Dispatcher.Invoke(() => a = new Model.Customer { Name = Name.Text, Surrname = Surr.Text, LibraryId = LibraryDetail.lib.Id - 1, Borrowed = 0 });
+                        Dispatcher.Invoke(() => CustomerViewModel.Customers.Add(a));
 
 
-                        Dispatcher.Invoke(() => ZakazniciViewModel.CustomerManager.addCustomer(new Model.Zakaznik { Jmeno = Name.Text, Prijmeni = Surr.Text, KnihovnaId = DetailOddeleni.odd.Id - 1, Vypujceno = 0 }));
+                        Dispatcher.Invoke(() => CustomerViewModel.CustomerManager.addCustomer(new Model.Customer { Name = Name.Text, Surrname = Surr.Text, LibraryId = LibraryDetail.lib.Id - 1, Borrowed = 0 }));
 
                         Dispatcher.Invoke(() => Knihovna.AddZakaznik.GetWindow(this).Close());
                 }

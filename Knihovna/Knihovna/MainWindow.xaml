@@ -9,7 +9,7 @@
    Title = "Knihovna" Height = "350" Width = "525">
 
     <Grid>
-        <views:KnihovnaControl x:Name = "KnihovnaViewModel" />
+        <views:LibraryControl x:Name = "KnihovnaViewModel" />
     </Grid>
 
 </Window>

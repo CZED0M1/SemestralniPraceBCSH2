@@ -7,8 +7,8 @@ using System.ComponentModel;
 
 namespace Knihovna.Model
 {
-    internal class KnihaModel {}
-    public class Kniha : INotifyPropertyChanged
+    internal class BookModel {}
+    public class Book : INotifyPropertyChanged
     {
         private string nazev;
         private string isbn;
@@ -29,7 +29,7 @@ namespace Knihovna.Model
             }
         }
 
-        public int knId
+        public int lbId
         {
             get
             {
@@ -38,12 +38,12 @@ namespace Knihovna.Model
             set
             {
                     knihovnaId =value;
-                    RaisePropertyChanged("knihovnaId");
+                    RaisePropertyChanged("libraryId");
                 
             }
         }
 
-        public string Nazev
+        public string Name
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Knihovna.Model
                 if (nazev != value)
                 {
                     nazev = value;
-                    RaisePropertyChanged("nazev");
+                    RaisePropertyChanged("name");
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace Knihovna.Model
                     RaisePropertyChanged("isbn");
                 }
             }
-        public string Autor
+        public string Author
         {
             get { return autor; }
 

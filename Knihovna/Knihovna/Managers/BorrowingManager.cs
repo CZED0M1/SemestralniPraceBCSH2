@@ -10,7 +10,7 @@ namespace Knihovna.Managers
 {
     public class BorrowingManager
     {
-        Repo<Vypujcka> BorrowingRepository
+        Repo<Borrowing> BorrowingRepository
         {
             get; set;
         }
@@ -18,27 +18,27 @@ namespace Knihovna.Managers
         public BorrowingManager(Repository repo)
         {
             BorrowingRepository = new();
-            BorrowingRepository.col = repo.GetInstance().GetCollection<Vypujcka>("vypujcka");
+            BorrowingRepository.col = repo.GetInstance().GetCollection<Borrowing>("vypujcka");
         }
 
-        public void addBorrowing(Vypujcka vypujcka)
+        public void addBorrowing(Borrowing vypujcka)
         {
             BorrowingRepository.Add(vypujcka);
         }
-        public void removeBorrowing(Vypujcka vypujcka)
+        public void removeBorrowing(Borrowing vypujcka)
         {
             BorrowingRepository.RemoveById(vypujcka.Id);
         }
-        public void editBorrowing(Vypujcka vypujcka)
+        public void editBorrowing(Borrowing vypujcka)
         {
             BorrowingRepository.UpdateById(vypujcka);
         }
-        public ObservableCollection<Vypujcka> getBorrowing()
+        public ObservableCollection<Borrowing> getBorrowing()
         {
 
             return BorrowingRepository.GetAll();
         }
-        public Vypujcka getBorrowingById(int id)
+        public Borrowing getBorrowingById(int id)
         {
             return BorrowingRepository.GetById(id);
         }

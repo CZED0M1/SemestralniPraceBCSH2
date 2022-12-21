@@ -12,7 +12,7 @@ namespace Knihovna.Managers
 {
     public class LibraryManager
     {
-        Repo<Knihovny> LibraryRepository 
+        Repo<Library> LibraryRepository 
         {
             get ; set;
         }
@@ -20,27 +20,27 @@ namespace Knihovna.Managers
         public LibraryManager(Repository repo)
         {
             LibraryRepository = new();
-            LibraryRepository.col = repo.GetInstance().GetCollection<Knihovny>("knihovna");
+            LibraryRepository.col = repo.GetInstance().GetCollection<Library>("knihovna");
         }
 
-        public void addLibrary(Knihovny knihovna)
+        public void addLibrary(Library knihovna)
         {
             LibraryRepository.Add(knihovna);
         }
-        public void removeLibrary(Knihovny knihovna)
+        public void removeLibrary(Library knihovna)
         {
             LibraryRepository.RemoveById(knihovna.Id);
         }
-        public void editLibrary(Knihovny knihovna)
+        public void editLibrary(Library knihovna)
         {
             LibraryRepository.UpdateById(knihovna);
         }
-        public ObservableCollection<Knihovny> getLibrary()
+        public ObservableCollection<Library> getLibrary()
         {
            
             return LibraryRepository.GetAll();
         }
-        public Knihovny getLibraryById(int id)
+        public Library getLibraryById(int id)
         {
            return LibraryRepository.GetById(id);
         }

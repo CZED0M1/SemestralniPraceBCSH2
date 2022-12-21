@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Knihovna.Model
 {
-    public class ZakazniciModel
+    public class CustomerModel
     {
     }
-    public class Zakaznik : INotifyPropertyChanged
+    public class Customer : INotifyPropertyChanged
     {
-        private string jmeno;
-        private string prijmeni;
-        private int vypujceno;
-        private int knihovnaId;
+        private string name;
+        private string surrname;
+        private int borrowed;
+        private int libraryId;
         private int id;
 
         public int Id
@@ -31,65 +31,65 @@ namespace Knihovna.Model
             }
         }
 
-        public int KnihovnaId
+        public int LibraryId
         {
             get
             {
-                return knihovnaId;
+                return libraryId;
             }
             set
             {
-                knihovnaId = value;
+                libraryId = value;
                 RaisePropertyChanged("knihovna");
 
             }
         }
 
-        public int Vypujceno
+        public int Borrowed
         {
             get
             {
-                return vypujceno;
+                return borrowed;
             }
             set
             {
-                    vypujceno = value;
-                    RaisePropertyChanged("vypujceno");
+                    borrowed = value;
+                    RaisePropertyChanged("borrowed");
                 
             }
         }
-        public string JmenoPr
+        public string NameSur
         {
             get
             {
-                return jmeno + " " + prijmeni;
+                return name + " " + surrname;
             }
         }
-        public string Jmeno
+        public string Name
         {
             get
             {
-                return jmeno;
+                return name;
             }
             set
             {
-                if (jmeno != value)
+                if (name != value)
                 {
-                    jmeno = value;
-                    RaisePropertyChanged("jmeno");
+                    name = value;
+                    RaisePropertyChanged("name");
                 }
             }
         }
-        public string Prijmeni
+        public string Surrname
         {
-            get { return prijmeni; }
+            get { return surrname; }
 
             set
             {
-                if (prijmeni != value)
+                if (surrname != value)
                 {
-                    prijmeni = value;
-                    RaisePropertyChanged("prijmeni");
+                    surrname = value;
+                    RaisePropertyChanged("surrname");
                 }
             }
         }

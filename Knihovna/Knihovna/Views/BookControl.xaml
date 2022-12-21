@@ -17,14 +17,14 @@
                 <Label Content = "ISBN" 
                         Width = "100" Margin = "3 5 3 5"/>
             </StackPanel>
-            <ItemsControl ItemsSource = "{Binding Path = Knihy}">
+            <ItemsControl ItemsSource = "{Binding Path = Book}">
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation = "Horizontal">
-                            <TextBox Text = "{Binding Path = Nazev, Mode = TwoWay}" 
+                            <TextBox Text = "{Binding Path = Name, Mode = TwoWay}" 
                         Width = "100" Margin = "3 5 3 5"/>
-                            <TextBox Text = "{Binding Path = Autor, Mode = TwoWay}" 
+                            <TextBox Text = "{Binding Path = Author, Mode = TwoWay}" 
                         Width = "100" Margin = "0 5 3 5"/>
                             <TextBox Text = "{Binding Path = ISBN, Mode = TwoWay}" 
                         Width = "100" Margin = "0 5 3 5"/>

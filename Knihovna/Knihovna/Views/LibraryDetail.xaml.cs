@@ -21,58 +21,58 @@ using System.Windows.Shapes;
 namespace Knihovna.Views
 {
     /// <summary>
-    /// Interaction logic for DetailOddeleni.xaml
+    /// Interaction logic for LibraryDetail.xaml
     /// </summary>
-    public partial class DetailOddeleni : UserControl
+    public partial class LibraryDetail : UserControl
     {
-        public static string nazev;
-        public static Knihovny odd;
-        public DetailOddeleni()
+        public static string name;
+        public static Library lib;
+        public LibraryDetail()
         {
             InitializeComponent();
             Thread threadAdd = new Thread(() =>
             {
-                foreach (var item in KnihovnaViewModel.Knihovny)
+                foreach (var item in LibraryViewModel.Libraries)
             {
-                    Dispatcher.Invoke(() => CB.Items.Add(item.Nazev));
+                    Dispatcher.Invoke(() => CB.Items.Add(item.Name));
             }
-                Dispatcher.Invoke(() => CB.SelectedItem = odd.Nazev);
-                Dispatcher.Invoke(() => lv1.ItemsSource = Knihovna.ViewModel.ZakazniciViewModel.Zakaznici);
-                Dispatcher.Invoke(() => lv2.ItemsSource = Knihovna.ViewModel.KnihaViewModel.Knihy);
+                Dispatcher.Invoke(() => CB.SelectedItem = lib.Name);
+                Dispatcher.Invoke(() => lv1.ItemsSource = Knihovna.ViewModel.CustomerViewModel.Customers);
+                Dispatcher.Invoke(() => lv2.ItemsSource = Knihovna.ViewModel.BookViewModel.Books);
             });
             threadAdd.Start();
         }
 
-        public bool FilterZakaznik(object obj)
+        public bool FilterCustomer(object obj)
         {
-            Zakaznik k = (Zakaznik)obj;
-            if (k.KnihovnaId == odd.Id-1) return true;
+            Customer k = (Customer)obj;
+            if (k.LibraryId == lib.Id-1) return true;
             return false;
         }
-        public bool FilterKniha(object obj)
+        public bool FilterBook(object obj)
         {
-            Kniha k = (Kniha)obj;
-            if (k.knId == odd.Id) return true;
+            Book k = (Book)obj;
+            if (k.lbId == lib.Id) return true;
             return false;
         }
-        private void addKniha(object sender, RoutedEventArgs e)
+        private void addBook(object sender, RoutedEventArgs e)
         {
-            AddKniha.kniha = null;
+            AddBook.book = null;
             AddKnihaW page = new AddKnihaW();
             page.Show();
         }
 
-        private void openZakaznik(object sender, MouseButtonEventArgs e)
+        private void openCustomer(object sender, MouseButtonEventArgs e)
         {
             Thread threadAdd = new Thread(() =>
             {
                 if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
             {
-                    Dispatcher.Invoke(() => Vypujcka.zak = (Zakaznik)lv1.SelectedItem);
+                    Dispatcher.Invoke(() => Borrow.cust = (Customer)lv1.SelectedItem);
 
                 VypujckyW page = Dispatcher.Invoke(() => new VypujckyW());
                     Dispatcher.Invoke(() => page.ShowDialog());
-                    Dispatcher.Invoke(() => lv2.Items.Filter = FilterKniha);
+                    Dispatcher.Invoke(() => lv2.Items.Filter = FilterBook);
             }else
             {
                 MessageBox.Show("Není vybrán zákazník", "Chyba");
@@ -81,63 +81,63 @@ namespace Knihovna.Views
             threadAdd.Start();
         }
 
-        private void OpenKniha(object sender, MouseButtonEventArgs e)
+        private void OpenBook(object sender, MouseButtonEventArgs e)
         {
             Thread threadAdd = new Thread(() =>
             {
                 if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
             {
-                AddKniha.kniha = Dispatcher.Invoke(() => (Kniha)lv2.SelectedItem);
+                AddBook.book = Dispatcher.Invoke(() => (Book)lv2.SelectedItem);
                 AddKnihaW page = Dispatcher.Invoke(() => new AddKnihaW());
                     Dispatcher.Invoke(() => page.ShowDialog());
             }
             else
             {
-                MessageBox.Show("Není vybrána kniha", "Chyba");
+                MessageBox.Show("Není vybrána book", "Chyba");
             }
             });
             threadAdd.Start();
         }
 
-        private void JineOddeleni(object sender, SelectionChangedEventArgs e)
+        private void ChangeLibrary(object sender, SelectionChangedEventArgs e)
         {
             Thread threadAdd = new Thread(() =>
             {
 
-                Dispatcher.Invoke(() => odd = KnihovnaViewModel.Knihovny.Where(k => k.Nazev == CB.SelectedItem.ToString()).First());
-                Dispatcher.Invoke(() => lv1.Items.Filter = FilterZakaznik);
+                Dispatcher.Invoke(() => lib = LibraryViewModel.Libraries.Where(k => k.Name == CB.SelectedItem.ToString()).First());
+                Dispatcher.Invoke(() => lv1.Items.Filter = FilterCustomer);
 
-                Dispatcher.Invoke(() => lv2.Items.Filter = FilterKniha);
+                Dispatcher.Invoke(() => lv2.Items.Filter = FilterBook);
             });
             threadAdd.Start();
         }
 
-        private void addZakaznik(object sender, RoutedEventArgs e)
+        private void addCustomer(object sender, RoutedEventArgs e)
         {
-                AddZakaznik.zakaznik = null;
+                AddCustomer.customer = null;
             Knihovna.AddZakaznik page = new Knihovna.AddZakaznik();
             page.Show();
 
         }
-        private void editKniha(object sender, RoutedEventArgs e)
+        private void editBook(object sender, RoutedEventArgs e)
         {
                 if (lv2.SelectedItems.Count > 0)
             {
-                AddKniha.kniha = (Kniha)lv2.SelectedItem;
+                AddBook.book = (Book)lv2.SelectedItem;
                 AddKnihaW page = new AddKnihaW();
                 page.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Není vybrána kniha", "Chyba");
+                MessageBox.Show("Není vybrána book", "Chyba");
             }
         }
 
-        private void editZakaznik(object sender, RoutedEventArgs e)
+        private void editCustomer(object sender, RoutedEventArgs e)
         {
                 if (lv1.SelectedItems.Count > 0)
             {
-                AddZakaznik.zakaznik = (Zakaznik)lv1.SelectedItem;
+                AddCustomer.customer = (Customer)lv1.SelectedItem;
                 Knihovna.AddZakaznik page = new Knihovna.AddZakaznik();
                 page.ShowDialog();
                 lv1.Items.Refresh();
@@ -149,35 +149,35 @@ namespace Knihovna.Views
             }
         }
 
-        private void delKniha(object sender, RoutedEventArgs e)
+        private void deleteBook(object sender, RoutedEventArgs e)
         {
             Thread threadAdd = new Thread(() =>
             {
             if (Dispatcher.Invoke(() => lv2.SelectedItems.Count > 0))
             {
-                    Kniha a = Dispatcher.Invoke(() => (Kniha)lv2.SelectedItem);
-                    KnihaViewModel.BookManager.removeKniha(a);
+                    Book a = Dispatcher.Invoke(() => (Book)lv2.SelectedItem);
+                    BookViewModel.BookManager.removeBook(a);
 
-                    Dispatcher.Invoke(() => KnihaViewModel.Knihy.Remove(a));
+                    Dispatcher.Invoke(() => BookViewModel.Books.Remove(a));
             }
             else
             {
-                MessageBox.Show("Není vybrána kniha", "Chyba");
+                MessageBox.Show("Není vybrána book", "Chyba");
             }
             });
             threadAdd.Start();
         }
 
-        private void delZakaznik(object sender, RoutedEventArgs e)
+        private void deleteCustomer(object sender, RoutedEventArgs e)
         {
             Thread threadAdd = new Thread(() =>
             {
-            Zakaznik z = Dispatcher.Invoke(() => (Zakaznik)lv1.SelectedItem);
+            Customer z = Dispatcher.Invoke(() => (Customer)lv1.SelectedItem);
                 if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
                 {
-                    Dispatcher.Invoke(() => ZakazniciViewModel.Zakaznici.Remove(z));
+                    Dispatcher.Invoke(() => CustomerViewModel.Customers.Remove(z));
 
-                    ZakazniciViewModel.CustomerManager.removeCustomer(z);
+                    CustomerViewModel.CustomerManager.removeCustomer(z);
                 }
                 else
                 {

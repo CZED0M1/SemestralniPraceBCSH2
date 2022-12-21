@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace Knihovna
 {
     /// <summary>
-    /// Interaction logic for AddZakaznik.xaml
+    /// Interaction logic for AddCustomer.xaml
     /// </summary>
     public partial class AddZakaznik : Window
     {
