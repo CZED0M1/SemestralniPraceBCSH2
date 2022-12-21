@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="Detail oddělení" Height="450" Width="800">
     <Grid>
-        <views:DetailOddeleni x:Name = "DetailOdd"/>
+        <views:LibraryDetail x:Name = "DetailOdd"/>
     </Grid>
 </Window>

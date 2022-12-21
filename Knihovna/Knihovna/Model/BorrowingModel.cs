@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Knihovna.Model
 {
-    public class VypujckyModel
+    public class BorrowingModel
     {
     }
-    public class Vypujcka : INotifyPropertyChanged
+    public class Borrowing : INotifyPropertyChanged
     {
-        private Kniha kniha;
-        private Zakaznik zakaznik;
+        private Book book;
+        private Customer customer;
         private int id;
 
         public int Id
@@ -27,31 +27,31 @@ namespace Knihovna.Model
         }
 
 
-        public Zakaznik Zakaznik
+        public Customer Customer
         {
             get
             {
-                return zakaznik;
+                return customer;
             }
             set
             {
-                if (zakaznik != value)
+                if (customer != value)
                 {
-                    zakaznik = value;
-                    RaisePropertyChanged("zakaznik");
+                    customer = value;
+                    RaisePropertyChanged("customer");
                 }
             }
         }
-        public Kniha Kniha
+        public Book Book
         {
-            get { return kniha; }
+            get { return book; }
 
             set
             {
-                if (kniha != value)
+                if (book != value)
                 {
-                    kniha = value;
-                    RaisePropertyChanged("kniha");
+                    book = value;
+                    RaisePropertyChanged("book");
                 }
             }
         }

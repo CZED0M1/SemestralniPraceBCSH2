@@ -21,21 +21,21 @@ using System.Windows.Shapes;
 namespace Knihovna.Views
 {
     /// <summary>
-    /// Interaction logic for AddKniha.xaml
+    /// Interaction logic for AddBook.xaml
     /// </summary>
-    public partial class AddKniha : UserControl
+    public partial class AddBook : UserControl
     {
-        public static Kniha kniha = null;
-        public AddKniha()
+        public static Book book = null;
+        public AddBook()
         {
             InitializeComponent();
             Thread threadAdd = new Thread(() =>
             {
-                if (kniha!= null)
+                if (book!= null)
             {
-                    Dispatcher.Invoke(() => Name.Text = kniha.Nazev);
-                    Dispatcher.Invoke(() => auth.Text = kniha.Autor);
-                    Dispatcher.Invoke(() => isbn.Text = kniha.ISBN);
+                    Dispatcher.Invoke(() => Name.Text = book.Name);
+                    Dispatcher.Invoke(() => auth.Text = book.Author);
+                    Dispatcher.Invoke(() => isbn.Text = book.ISBN);
                     Dispatcher.Invoke(() => Pridat.Content = "Editovat");
             }
             });
@@ -43,17 +43,17 @@ namespace Knihovna.Views
         }
 
 
-        private void addKniha(object sender, RoutedEventArgs e)
+        private void AddBookToList(object sender, RoutedEventArgs e)
         {
             Thread threadAdd = new Thread(() =>
             {
-                if (kniha != null)
+                if (book != null)
             {
-                Kniha a = KnihaViewModel.Knihy.Where(x => x == kniha).First();
-                    Dispatcher.Invoke(() => a.Nazev = Name.Text);
-                    Dispatcher.Invoke(() => a.Autor = auth.Text);
+                Book a = BookViewModel.Books.Where(x => x == book).First();
+                    Dispatcher.Invoke(() => a.Name = Name.Text);
+                    Dispatcher.Invoke(() => a.Author = auth.Text);
                     Dispatcher.Invoke(() => a.ISBN = isbn.Text);
-                    KnihaViewModel.BookManager.editKniha(a);
+                    BookViewModel.BookManager.editKniha(a);
 
 
                     Dispatcher.Invoke(() => AddKnihaW.GetWindow(this).Close());
@@ -64,15 +64,15 @@ namespace Knihovna.Views
 
                 if (Dispatcher.Invoke(() => Name.Text.Length != 0  && auth.Text.Length != 0 && isbn.Text.Length != 0))
                 {
-                        Dispatcher.Invoke(() => KnihaViewModel.Knihy.Add(new Model.Kniha { Nazev = Name.Text, Autor = auth.Text, ISBN = isbn.Text, knId = DetailOddeleni.odd.Id}));
-                        KnihaViewModel.BookManager.addBook(KnihaViewModel.Knihy[KnihaViewModel.Knihy.Count - 1]);
+                        Dispatcher.Invoke(() => BookViewModel.Books.Add(new Model.Book { Name = Name.Text, Author = auth.Text, ISBN = isbn.Text, lbId = LibraryDetail.lib.Id}));
+                        BookViewModel.BookManager.addBook(BookViewModel.Books[BookViewModel.Books.Count - 1]);
                         Dispatcher.Invoke(()=> AddKnihaW.GetWindow(this).Close());
                     }
                 else
                 {
                     MessageBox.Show("Nejsou vyplněny všechny položky", "Chyba");
                 }
-                kniha = null;
+                book = null;
             }
             });
             threadAdd.Start();

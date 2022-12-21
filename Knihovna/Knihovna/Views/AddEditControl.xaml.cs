@@ -24,15 +24,15 @@ namespace Knihovna.Views
     /// </summary>
     public partial class AddEditControl : UserControl
     {
-        public static string nazev="";
+        public static string name="";
         public AddEditControl()
         {
             
             InitializeComponent();
             Thread threadAdd = new Thread(() =>
             {
-                Dispatcher.Invoke(() => OddName.Text = nazev);
-            if(nazev!="")
+                Dispatcher.Invoke(() => OddName.Text = name);
+            if(name!="")
             {
                     Dispatcher.Invoke(() => Pridat.Content = "Editovat");
             }
@@ -48,24 +48,24 @@ namespace Knihovna.Views
             {
                 Thread threadAdd = new Thread(() =>
                 {
-                Knihovny? a = null;
-                if (KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).Any())
-                    a = KnihovnaViewModel.Knihovny.Where(x => x.Nazev == nazev).First();
+                Library? a = null;
+                if (LibraryViewModel.Libraries.Where(x => x.Name == name).Any())
+                    a = LibraryViewModel.Libraries.Where(x => x.Name == name).First();
 
                     if (a == null)
                     {
 
 
-                        Dispatcher.Invoke(() => KnihovnaViewModel.addKnihovny(new Knihovny { Nazev = OddName.Text }));
+                        Dispatcher.Invoke(() => LibraryViewModel.addLibrary(new Library { Name = OddName.Text }));
 
-                        KnihovnaViewModel.LibraryManager.addLibrary(KnihovnaViewModel.Knihovny[KnihovnaViewModel.Knihovny.Count - 1]);
+                        LibraryViewModel.LibraryManager.addLibrary(LibraryViewModel.Libraries[LibraryViewModel.Libraries.Count - 1]);
                     }
                     else
                     {
-                        Dispatcher.Invoke(() => a.Nazev = OddName.Text);
-                        nazev = "";
+                        Dispatcher.Invoke(() => a.Name = OddName.Text);
+                        name = "";
 
-                        KnihovnaViewModel.LibraryManager.editLibrary(a);
+                        LibraryViewModel.LibraryManager.editLibrary(a);
                     
                     }
                     Dispatcher.Invoke(() => Add.GetWindow(this).Close());

@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="Vypůjčení" Height="450" Width="800">
     <Grid>
-        <views:Vypujcka x:Name = "Vypujc"/>
+        <views:Borrow x:Name = "Vypujc"/>
     </Grid>
 </Window>

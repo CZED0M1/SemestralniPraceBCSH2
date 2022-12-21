@@ -10,7 +10,7 @@ namespace Knihovna.Managers
 {
     public  class BookManager
     {
-       Repo<Kniha> BookRepository
+       Repo<Book> BookRepository
         {
             get; set;
         }
@@ -18,27 +18,27 @@ namespace Knihovna.Managers
         public BookManager(Repository repo)
         {
             BookRepository = new();
-            BookRepository.col = repo.GetInstance().GetCollection<Kniha>("kniha");
+            BookRepository.col = repo.GetInstance().GetCollection<Book>("book");
         }
 
-        public void addBook(Kniha kniha)
+        public void addBook(Book kniha)
         {
             BookRepository.Add(kniha);
         }
-        public void removeKniha(Kniha kniha)
+        public void removeBook(Book kniha)
         {
             BookRepository.RemoveById(kniha.Id);
         }
-        public void editKniha(Kniha kniha)
+        public void editKniha(Book kniha)
         {
             BookRepository.UpdateById(kniha);
         }
-        public ObservableCollection<Kniha> getKniha()
+        public ObservableCollection<Book> getKniha()
         {
 
             return BookRepository.GetAll();
         }
-        public Kniha getKnihaById(int id)
+        public Book getKnihaById(int id)
         {
             return BookRepository.GetById(id);
         }

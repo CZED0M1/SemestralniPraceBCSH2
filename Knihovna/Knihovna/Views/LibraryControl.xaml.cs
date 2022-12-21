@@ -21,25 +21,25 @@ using System.Windows.Shapes;
 namespace Knihovna.Views
 {
     /// <summary>
-    /// Interaction logic for KnihovnaControl.xaml
+    /// Interaction logic for LibraryControl.xaml
     /// </summary>
-    public partial class KnihovnaControl : UserControl
+    public partial class LibraryControl : UserControl
     {
-        public KnihovnaControl()
+        public LibraryControl()
         {
             Repository repository = new();
 
             InitializeComponent();
-            ViewModel.KnihovnaViewModel.Knihovny = new();
-            ViewModel.KnihaViewModel.Knihy = new();
-            ViewModel.ZakazniciViewModel.Zakaznici = new();
-            ViewModel.VypujckyViewModel.Vypujcky = new();
-            ViewModel.KnihovnaViewModel.LoadKnihovny(repository);
-            ViewModel.KnihaViewModel.LoadKnihy(repository);
-            ViewModel.ZakazniciViewModel.LoadZakaznici(repository);
-            ViewModel.VypujckyViewModel.LoadVypujcky(repository);
+            ViewModel.LibraryViewModel.Libraries = new();
+            ViewModel.BookViewModel.Books = new();
+            ViewModel.CustomerViewModel.Customers = new();
+            ViewModel.BorrowingsViewModel.Borrowings = new();
+            ViewModel.LibraryViewModel.LoadLibrary(repository);
+            ViewModel.BookViewModel.LoadBook(repository);
+            ViewModel.CustomerViewModel.LoadZakaznici(repository);
+            ViewModel.BorrowingsViewModel.LoadBorrows(repository);
             
-            lv1.ItemsSource = KnihovnaViewModel.Knihovny;
+            lv1.ItemsSource = LibraryViewModel.Libraries;
            
         }
 
@@ -60,7 +60,7 @@ namespace Knihovna.Views
             {
                 if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
             {
-                    Dispatcher.Invoke(() => KnihovnaViewModel.removeKnihovny((Knihovny)lv1.SelectedItem));
+                    Dispatcher.Invoke(() => LibraryViewModel.removeLibrary((Library)lv1.SelectedItem));
             }
             else
             {
@@ -77,8 +77,8 @@ namespace Knihovna.Views
             {
                 if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
             {
-                Knihovny knihovna = Dispatcher.Invoke(() => (Knihovny)lv1.SelectedItem);
-                AddEditControl.nazev = knihovna.Nazev;
+                Library knihovna = Dispatcher.Invoke(() => (Library)lv1.SelectedItem);
+                AddEditControl.name = knihovna.Name;
                     Add page = Dispatcher.Invoke(() => new Add());
                     Dispatcher.Invoke(() => page.Show());
                
@@ -98,9 +98,9 @@ namespace Knihovna.Views
             {
                 if (Dispatcher.Invoke(() => lv1.SelectedItems.Count > 0))
             {
-                     Knihovny knihovna = Dispatcher.Invoke(() => (Knihovny)lv1.SelectedItem);
-            DetailOddeleni.nazev = knihovna.Nazev;
-            DetailOddeleni.odd = knihovna;
+                     Library knihovna = Dispatcher.Invoke(() => (Library)lv1.SelectedItem);
+            LibraryDetail.name = knihovna.Name;
+            LibraryDetail.lib = knihovna;
             detailOdd page = Dispatcher.Invoke(() => new detailOdd());
             Dispatcher.Invoke(() => page.Show());
             }
@@ -119,7 +119,7 @@ namespace Knihovna.Views
                 if (e.Key == Key.Delete) {
                 if (lv1.SelectedItems.Count > 0)
                 {
-                    KnihovnaViewModel.Knihovny.Remove((Knihovny)lv1.SelectedItem);
+                    LibraryViewModel.Libraries.Remove((Library)lv1.SelectedItem);
                 }
                 else
                 {
@@ -128,9 +128,9 @@ namespace Knihovna.Views
             }else if(e.Key == Key.Enter) {
                 if (lv1.SelectedItems.Count > 0)
                 {
-                    Knihovny knihovna = (Knihovny)lv1.SelectedItem;
-                    DetailOddeleni.nazev = knihovna.Nazev;
-                    DetailOddeleni.odd = knihovna;
+                    Library knihovna = (Library)lv1.SelectedItem;
+                    LibraryDetail.name = knihovna.Name;
+                    LibraryDetail.lib = knihovna;
                     detailOdd page = new detailOdd();
                     page.Show();
                 }

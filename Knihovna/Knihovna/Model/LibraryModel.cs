@@ -10,29 +10,29 @@ using System.Threading.Tasks;
 
 namespace Knihovna.Model
 {
-    internal class KnihovnaModel
+    internal class LibraryModel
     {
     }
 
-    public class Knihovny : INotifyPropertyChanged
+    public class Library : INotifyPropertyChanged
     {
-        private string nazev;
+        private string name;
         private int id;
 
-        public Knihovny()
+        public Library()
         {
         }
 
-        public Knihovny(string nazev, int id)
+        public Library(string nazev, int id)
         {
-            Nazev = nazev;
+            Name = nazev;
             this.id = id;
         }
 
-        public Knihovny(string nazev)
+        public Library(string nazev)
         {
-            id = KnihovnaViewModel.Knihovny.Count();
-            Nazev = nazev;
+            id = LibraryViewModel.Libraries.Count();
+            Name = nazev;
         }
 
         public int Id
@@ -51,18 +51,18 @@ namespace Knihovna.Model
             }
         }
 
-        public string Nazev
+        public string Name
         {
             get
             {
-                return nazev;
+                return name;
             }
             set
             {
-                if (nazev != value)
+                if (name != value)
                 {
-                    nazev = value;
-                    RaisePropertyChanged("nazev");
+                    name = value;
+                    RaisePropertyChanged("name");
                 }
             }
         }

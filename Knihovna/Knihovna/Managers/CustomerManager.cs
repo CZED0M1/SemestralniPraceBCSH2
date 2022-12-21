@@ -10,7 +10,7 @@ namespace Knihovna.Managers
 {
    public class CustomerManager
     {
-        Repo<Zakaznik>  CustomerRepository
+        Repo<Customer>  CustomerRepository
         {
             get; set;
         }
@@ -18,27 +18,27 @@ namespace Knihovna.Managers
         public CustomerManager(Repository repo)
         {
             CustomerRepository = new();
-            CustomerRepository.col = repo.GetInstance().GetCollection<Zakaznik>("zakaznik");
+            CustomerRepository.col = repo.GetInstance().GetCollection<Customer>("customer");
         }
 
-        public void addCustomer(Zakaznik zakaznik)
+        public void addCustomer(Customer zakaznik)
         {
             CustomerRepository.Add(zakaznik);
         }
-        public void removeCustomer(Zakaznik zakaznik)
+        public void removeCustomer(Customer zakaznik)
         {
             CustomerRepository.RemoveById(zakaznik.Id);
         }
-        public void editCustomer(Zakaznik zakaznik)
+        public void editCustomer(Customer zakaznik)
         {
             CustomerRepository.UpdateById(zakaznik);
         }
-        public ObservableCollection<Zakaznik> getCustomer()
+        public ObservableCollection<Customer> getCustomer()
         {
 
             return CustomerRepository.GetAll();
         }
-        public Zakaznik getCustomerById(int id)
+        public Customer getCustomerById(int id)
         {
             return CustomerRepository.GetById(id);
         }

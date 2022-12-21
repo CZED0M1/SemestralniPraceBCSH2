@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="detailOdd" Height="212" Width="216">
     <Grid>
-        <views:AddZakaznik x:Name = "Zakaznik"/>
+        <views:AddCustomer x:Name = "Zakaznik"/>
     </Grid>
 </Window>
